@@ -19,7 +19,9 @@ public class PlayerManager {
         if (vanish.contains(player)) {
             vanish.remove(player);
             player.sendMessage(Utils.color("&fVanish has been toggled &c&lOFF&f!"));
-            player.setPlayerListName(Utils.color("[V] " + player.getName()));
+
+            Nick nick = getNick(player);
+            player.setPlayerListName(Utils.color(nick == null ? player.getDisplayName() : nick.getNickname()));
 
             for (Player players : Bukkit.getOnlinePlayers()) {
                 players.showPlayer(player);
@@ -29,8 +31,7 @@ public class PlayerManager {
         vanish.add(player);
         player.sendMessage(Utils.color("&fVanish has been toggled &a&lON&f!"));
 
-        Nick nick = getNick(player);
-        player.setPlayerListName(Utils.color(nick == null ? player.getDisplayName() : nick.getNickname()));
+        player.setPlayerListName(Utils.color("&7[V] " + player.getName()));
 
         for (Player players : Bukkit.getOnlinePlayers()) {
             if (!players.hasPermission("butter.vanish")) {

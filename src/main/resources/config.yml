@@ -24,6 +24,9 @@ commands:
   fly:
     toggle-on: "&fFly has been toggled &aON&f!"
     toggle-off: "&fFly has been toggled &cOFF&f!"
+  item:
+    invalid: "&c%item% is not a valid item type!"
+    given: "&fYou have been given &ex%amount% %item%&f!"
   nick:
     too-long: "&cYour nickname cannot exceed 16 characters!"
     already-nicked: "&eYou are already nicked as %nick%!"

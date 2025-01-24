@@ -26,12 +26,15 @@ public enum Message {
     CMD_FLY_TOGGLE_ON("commands.fly.toggle-on"),
     CMD_FLY_TOGGLE_OFF("commands.fly.toggle-off"),
 
+    CMD_ITEM_INVALID("commands.item.invalid"),
+    CMD_ITEM_GIVEN("commands.item.given"),
+
     CMD_NICK_TOO_LONG("commands.nick.too-long"),
     CMD_NICK_ALREADY_NICKED("commands.nick.already-nicked"),
     CMD_NICK_NICKED("commands.nick.nicked"),
 
     CMD_UNNICK_NOT_NICKED("commands.unnick.not-nicked"),
-    CMD_UNNICK_UNNICKED("commands.unnick.unnucked");
+    CMD_UNNICK_UNNICKED("commands.unnick.unnicked");
 
     @Getter @NonNull
     private final String path;

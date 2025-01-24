@@ -33,7 +33,7 @@ public class NickCmd implements CommandExecutor {
             return false;
         }
 
-        PlayerManager.toggleVanish(player);
+        PlayerManager.setNickname(player, args[0]);
         return false;
     }
 }

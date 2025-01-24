@@ -2,7 +2,6 @@ package com.butterfly.plugin.commands;
 
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
-import lombok.RequiredArgsConstructor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -30,8 +29,20 @@ public class ItemCmd implements CommandExecutor {
             return false;
         }
 
-        ItemStack item = new ItemStack(Material.valueOf(args[0].toUpperCase()));
-        player.getInventory().addItem(item);
+        int amount = args.length > 1 ? Integer.parseInt(args[1]) : 1;
+
+        try {
+            Material item = Material.valueOf(args[0].toUpperCase());
+            player.getInventory().addItem(new ItemStack(item, amount));
+            MessageManager.sendMessage(player,
+                                        Message.CMD_ITEM_GIVEN,
+                                        (s) -> s.replace("%amount%", String.valueOf(amount))
+                                                .replace("%item%", item.toString()));
+        } catch (IllegalArgumentException error) {
+            MessageManager.sendMessage(player,
+                                        Message.CMD_ITEM_INVALID,
+                                        (s) -> s.replace("%item%", args[0]));
+        }
         return false;
     }
 }
