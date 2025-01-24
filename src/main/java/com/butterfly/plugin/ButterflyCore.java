@@ -3,6 +3,7 @@ package com.butterfly.plugin;
 import com.butterfly.plugin.commands.*;
 import com.butterfly.plugin.commands.nick.NickCmd;
 import com.butterfly.plugin.commands.nick.UnnickCmd;
+import com.butterfly.plugin.listeners.JoinListener;
 import com.butterfly.plugin.listeners.QuitListener;
 import com.butterfly.plugin.listeners.world.BreakListener;
 import com.butterfly.plugin.listeners.world.PlaceListener;
@@ -44,6 +45,7 @@ public class ButterflyCore extends JavaPlugin {
     void registerListeners() {
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
         getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
     }
 }
