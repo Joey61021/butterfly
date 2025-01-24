@@ -29,3 +29,5 @@ commands:
     aliases: []
   disguise:
     aliases: []
+  undisguise:
+    aliases: []

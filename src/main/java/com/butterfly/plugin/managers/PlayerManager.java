@@ -8,7 +8,6 @@ import com.butterfly.plugin.utilities.Nick;
 import com.butterfly.plugin.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -23,8 +22,14 @@ public class PlayerManager {
 
     public static void toggleVanish(Player player) {
         if (vanish.contains(player)) {
+            Disguise disguise = getDisguise(player);
+            if (disguise != null) {
+                MessageManager.sendMessage(player, Message.CMD_VANISH_DISGUISED);
+                return;
+            }
+
             vanish.remove(player);
-            player.sendMessage(Utils.color("&fVanish has been toggled &c&lOFF&f!"));
+            MessageManager.sendMessage(player, Message.CMD_VANISH_TOGGLE_OFF);
 
             Nick nick = getNick(player);
             player.setPlayerListName(Utils.color(nick == null ? player.getDisplayName() : nick.getNickname()));
@@ -35,7 +40,7 @@ public class PlayerManager {
             return;
         }
         vanish.add(player);
-        player.sendMessage(Utils.color("&fVanish has been toggled &a&lON&f!"));
+        MessageManager.sendMessage(player, Message.CMD_VANISH_TOGGLE_ON);
 
         player.setPlayerListName(Utils.color("&7[V] " + player.getName()));
 

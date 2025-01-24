@@ -23,6 +23,10 @@ public enum Message {
 
     CMD_INV("commands.inv"),
 
+    CMD_VANISH_DISGUISED("commands.vanish.disguised"),
+    CMD_VANISH_TOGGLE_ON("commands.vanish.toggle-on"),
+    CMD_VANISH_TOGGLE_OFF("commands.vanish.toggle-off"),
+
     CMD_FLY_TOGGLE_ON("commands.fly.toggle-on"),
     CMD_FLY_TOGGLE_OFF("commands.fly.toggle-off"),
 
@@ -39,7 +43,10 @@ public enum Message {
     CMD_DISGUISE_NOT_VANISHED("commands.disguise.not-vanished"),
     CMD_DISGUISE_INVALID("commands.disguise.invalid"),
     CMD_DISGUISE_ALREADY_DISGUISED("commands.disguise.already-disguised"),
-    CMD_DISGUISE_DISGUISED("commands.disguise.disguised");
+    CMD_DISGUISE_DISGUISED("commands.disguise.disguised"),
+
+    CMD_UNDIGUISE_NOT_DISGUISED("commands.undisguise.not-disguised"),
+    CMD_UNDIGUISE_UNDISGUISED("commands.undisguise.undisguised");
 
     @Getter @NonNull
     private final String path;

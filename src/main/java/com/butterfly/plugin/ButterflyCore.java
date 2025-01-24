@@ -40,6 +40,7 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("nick").setExecutor(new NickCmd());
         getCommand("unnick").setExecutor(new UnnickCmd());
         getCommand("disguise").setExecutor(new DisguiseCmd());
+        getCommand("undisguise").setExecutor(new UndisguiseCmd());
     }
 
     void registerListeners() {
