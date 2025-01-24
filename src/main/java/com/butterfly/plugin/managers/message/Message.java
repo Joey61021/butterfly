@@ -34,7 +34,12 @@ public enum Message {
     CMD_NICK_NICKED("commands.nick.nicked"),
 
     CMD_UNNICK_NOT_NICKED("commands.unnick.not-nicked"),
-    CMD_UNNICK_UNNICKED("commands.unnick.unnicked");
+    CMD_UNNICK_UNNICKED("commands.unnick.unnicked"),
+
+    CMD_DISGUISE_NOT_VANISHED("commands.disguise.not-vanished"),
+    CMD_DISGUISE_INVALID("commands.disguise.invalid"),
+    CMD_DISGUISE_ALREADY_DISGUISED("commands.disguise.already-disguised"),
+    CMD_DISGUISE_DISGUISED("commands.disguise.disguised");
 
     @Getter @NonNull
     private final String path;

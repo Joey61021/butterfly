@@ -27,3 +27,5 @@ commands:
     aliases: []
   unnick:
     aliases: []
+  disguise:
+    aliases: []

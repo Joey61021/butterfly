@@ -1,13 +1,14 @@
 package com.butterfly.plugin.commands;
 
+import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 public class DisguiseCmd implements CommandExecutor {
 
@@ -24,24 +25,23 @@ public class DisguiseCmd implements CommandExecutor {
             return false;
         }
 
+        if (!PlayerManager.vanish.contains(player)) {
+            MessageManager.sendMessage(player, Message.CMD_DISGUISE_NOT_VANISHED);
+            return false;
+        }
+
         if (args.length == 0) {
             MessageManager.sendMessage(player, Message.GENERAL_INVALID_ARGS);
             return false;
         }
 
-        int amount = args.length > 1 ? Integer.parseInt(args[1]) : 1;
-
         try {
-            Material item = Material.valueOf(args[0].toUpperCase());
-            player.getInventory().addItem(new ItemStack(item, amount));
-            MessageManager.sendMessage(player,
-                                        Message.CMD_ITEM_GIVEN,
-                                        (s) -> s.replace("%amount%", String.valueOf(amount))
-                                                .replace("%item%", item.toString()));
+            Entity entity = player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(args[0].toUpperCase()));
+            PlayerManager.setDisguise(player, entity);
         } catch (IllegalArgumentException error) {
             MessageManager.sendMessage(player,
-                                        Message.CMD_ITEM_INVALID,
-                                        (s) -> s.replace("%item%", args[0]));
+                                        Message.CMD_DISGUISE_INVALID,
+                                        (s) -> s.replace("%entity%", args[0]));
         }
         return false;
     }

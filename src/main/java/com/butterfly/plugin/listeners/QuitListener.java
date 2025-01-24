@@ -1,7 +1,9 @@
 package com.butterfly.plugin.listeners;
 
 import com.butterfly.plugin.managers.PlayerManager;
+import com.butterfly.plugin.utilities.Disguise;
 import com.butterfly.plugin.utilities.Nick;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,6 +22,12 @@ public class QuitListener implements Listener {
         Nick nick = PlayerManager.getNick(player);
         if (nick != null) {
             PlayerManager.nicknames.remove(nick);
+        }
+
+        Disguise disguise = PlayerManager.getDisguise(player);
+        if (disguise != null) {
+            disguise.getEntity().remove();
+            PlayerManager.disguises.remove(disguise);
         }
     }
 }

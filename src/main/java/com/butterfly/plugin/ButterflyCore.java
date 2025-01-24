@@ -3,8 +3,7 @@ package com.butterfly.plugin;
 import com.butterfly.plugin.commands.*;
 import com.butterfly.plugin.commands.nick.NickCmd;
 import com.butterfly.plugin.commands.nick.UnnickCmd;
-import com.butterfly.plugin.listeners.JoinListener;
-import com.butterfly.plugin.listeners.QuitListener;
+import com.butterfly.plugin.listeners.*;
 import com.butterfly.plugin.listeners.world.BreakListener;
 import com.butterfly.plugin.listeners.world.PlaceListener;
 import com.butterfly.plugin.utilities.Config;
@@ -40,12 +39,16 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("item").setExecutor(new ItemCmd());
         getCommand("nick").setExecutor(new NickCmd());
         getCommand("unnick").setExecutor(new UnnickCmd());
+        getCommand("disguise").setExecutor(new DisguiseCmd());
     }
 
     void registerListeners() {
         getServer().getPluginManager().registerEvents(new BreakListener(), this);
         getServer().getPluginManager().registerEvents(new PlaceListener(), this);
+        getServer().getPluginManager().registerEvents(new DamageListener(), this);
+        getServer().getPluginManager().registerEvents(new DeathListener(), this);
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
+        getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
     }
 }

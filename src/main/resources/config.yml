@@ -34,3 +34,8 @@ commands:
   unnicked:
     not-nicked: "&cYou are not nicked!"
     unnicked: "&eYour nickname has been removed!"
+  disguise:
+    not-vanished: "&cYou need to be in vanished in order to run this command!"
+    invalid: "&c%entity% is not a valid entity type!"
+    already-disguised: "&cYou are already disguised!"
+    disguised: "&aYou have been disguised successfully!"
