@@ -48,6 +48,7 @@ public class ButterflyCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlaceListener(), this);
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
+        getServer().getPluginManager().registerEvents(new HealListener(), this);
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);

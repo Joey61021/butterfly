@@ -1,6 +1,5 @@
 package com.butterfly.plugin.managers;
 
-import com.butterfly.plugin.ButterflyCore;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Disguise;
@@ -123,11 +122,12 @@ public class PlayerManager {
 
         Disguise disguise = new Disguise(player, entity);
         disguises.add(disguise);
-
         entity.setGravity(false);
+        player.setCollidable(false);
         ((LivingEntity) entity).setAI(false);
         ((LivingEntity) entity).setCollidable(false);
-        player.hideEntity(ButterflyCore.instance, entity);
+        ((LivingEntity) entity).setHealth(player.getHealth());
+        ((LivingEntity) entity).setMaxHealth(player.getMaxHealth());
 
         MessageManager.sendMessage(player, Message.CMD_DISGUISE_DISGUISED);
     }
