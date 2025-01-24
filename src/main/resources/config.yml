@@ -1,0 +1,33 @@
+general:
+  gamemodes:
+    survival: '&aSurvival'
+    creative: '&cCreative'
+    adventure: '&eAdventure'
+    spectator: '&dSpectator'
+  messages:
+    no-console: '&cSorry, but you cannot use this command via console.'
+    no-permission: '&cSorry, but you do not have permission to perform this command.'
+    no-player: '&cSorry, but we could not find this player in your current server.'
+    invalid-args: "&cMissing arguments or incorrect command usage."
+    unable-to-build: "&cYou are unable to build without enabling build mode with /build first!"
+    already-in-gm:
+      self: '&cYou are already in this gamemode!'
+      other: '&c%target% is already in this gamemode!'
+commands:
+  gm:
+    self: '&fYour gamemode has been set to %gamemode%'
+    other: "&f%target%'s gamemode has been set to %gamemode%"
+  build:
+    toggle-on: "&fBuild has been toggled &aON&f!"
+    toggle-off: "&fBuild has been toggled &cOFF&f!"
+  inv: "&fOpening %player%'s &finventory..."
+  fly:
+    toggle-on: "&fFly has been toggled &aON&f!"
+    toggle-off: "&fFly has been toggled &cOFF&f!"
+  nick:
+    too-long: "&cYour nickname cannot exceed 16 characters!"
+    already-nicked: "&eYou are already nicked as %nick%!"
+    nicked: "&fYou have nicked as &e%nick%&e!"
+  unnicked:
+    not-nicked: "&cYou are not nicked!"
+    unnicked: "&eYour nickname has been removed!"

@@ -1,0 +1,29 @@
+author: Texxyy
+name: Butterfly
+main: com.butterfly.plugin.ButterflyCore
+api-version: 1.20
+version: ${project.version}
+
+commands:
+  gma:
+    aliases: [gm2]
+  gmc:
+    aliases: [gm1]
+  gm:
+    aliases: []
+  gms:
+    aliases: [gm0]
+  gmsp:
+    aliases: [gm3]
+  vanish:
+    aliases: [v]
+  inv:
+    aliases: [inventory]
+  fly:
+    aliases: [f]
+  item:
+    aliases: [i]
+  nick:
+    aliases: []
+  unnick:
+    aliases: []
