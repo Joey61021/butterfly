@@ -10,7 +10,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class InvCmd implements CommandExecutor {
 
@@ -39,12 +41,29 @@ public class InvCmd implements CommandExecutor {
         }
 
         MessageManager.sendMessage(player, Message.CMD_INV, (s) -> s.replace("%player%", target.getDisplayName()));
+        Inventory inv = Bukkit.createInventory(null, 6 * 9, Utils.color("&8" + target.getName() + "'s inventory"));
+
+        ItemStack divider = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        ItemMeta meta = divider.getItemMeta();
+        meta.setDisplayName(Utils.color(""));
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        divider.setItemMeta(meta);
+
+        for (int i = 0; i < 9; i++) {
+            inv.setItem((4 * 9) +  i, divider);
+        }
 
         ItemStack[] items = target.getInventory().getContents();
-        Inventory inv = Bukkit.createInventory(null, 5 * 9, Utils.color("&8" + target.getName() + "'s inventory"));
-        for (int i = 0; i < target.getInventory().getContents().length; i++) {
-            if (items[i] != null && items[i].getType() != Material.AIR) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i] != null && items[i].getType() != Material.AIR && i < 36) {
                 inv.setItem(i, items[i]);
+            }
+        }
+
+        ItemStack[] armor = target.getInventory().getArmorContents();
+        for (int i = 0; i < armor.length; i++) {
+            if (armor[i] != null && armor[i].getType() != Material.AIR && i < 36) {
+                inv.setItem((5 * 9) + i, armor[i]);
             }
         }
 
