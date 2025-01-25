@@ -128,21 +128,12 @@ public class PlayerManager {
         Disguise disguise = new Disguise(player, entity);
         disguises.add(disguise);
         entity.setGravity(false);
-        player.setCollidable(false);
 
         LivingEntity livingEntity = (LivingEntity) entity;
         livingEntity.setAI(false);
         livingEntity.setCollidable(false);
         livingEntity.setHealth(player.getHealth());
         livingEntity.setMaxHealth(player.getMaxHealth());
-
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
-        Team team = scoreboard.getTeam("nocollide");
-        if (team == null) {
-            team = scoreboard.registerNewTeam("nocollide");
-            team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
-        }
-        team.addEntry(player.getName());
 
         MessageManager.sendMessage(player, Message.CMD_DISGUISE_DISGUISED);
     }

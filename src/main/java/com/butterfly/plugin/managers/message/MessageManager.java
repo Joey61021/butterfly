@@ -16,13 +16,13 @@ public class MessageManager {
 
     public static void sendMessage(CommandSender receiver, Message message, Function<String, String> replacementFunction) {
         String path = message.getPath();
-        if (ButterflyCore.config.isString(path))
-            receiver.sendMessage(Utils.color(replacementFunction.apply(ButterflyCore.config.getString(path))));
-        else if (ButterflyCore.config.isList(path)) {
-            String joinedMessage = String.join("\n", ButterflyCore.config.getStringList(path));
+        if (ButterflyCore.messages.isString(path))
+            receiver.sendMessage(Utils.color(replacementFunction.apply(ButterflyCore.messages.getString(path))));
+        else if (ButterflyCore.messages.isList(path)) {
+            String joinedMessage = String.join("\n", ButterflyCore.messages.getStringList(path));
             receiver.sendMessage(Utils.color(replacementFunction.apply(joinedMessage)));
         }
         else
-            throw new IllegalArgumentException("Path \"" + path + "\" is not a string or list of strings in the config.yml");
+            throw new IllegalArgumentException("Path \"" + path + "\" is not a string or list of strings in the messages.yml");
     }
 }

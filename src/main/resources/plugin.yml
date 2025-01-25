@@ -31,3 +31,5 @@ commands:
     aliases: []
   undisguise:
     aliases: []
+  heal:
+    aliases: [h]

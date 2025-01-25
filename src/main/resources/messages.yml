@@ -46,3 +46,6 @@ commands:
   undisguise:
     not-disguised: "&cYou are not disguised!"
     undisguised: "&eYou have been undisguised!"
+  heal:
+    healed-self: "&dYou &fhave been healed!"
+    healed-other: "&d%target% &fhas been healed!"

@@ -17,7 +17,7 @@ public class GamemodeManager {
         player.setGameMode(gamemode);
         MessageManager.sendMessage(player,
                                     Message.CMD_GM_SELF,
-                                    (s) -> s.replace("%gamemode%", ButterflyCore.config.getString("general.gamemodes." + player.getGameMode().toString().toLowerCase())));
+                                    (s) -> s.replace("%gamemode%", ButterflyCore.messages.getString("general.gamemodes." + player.getGameMode().toString().toLowerCase())));
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
     }
 
@@ -33,7 +33,7 @@ public class GamemodeManager {
         }
         MessageManager.sendMessage(player,
                                     Message.CMD_GM_SELF,
-                                    (s) -> s.replace("%gamemode%", ButterflyCore.config.getString("general.gamemodes." + player.getGameMode().toString().toLowerCase())));
+                                    (s) -> s.replace("%gamemode%", ButterflyCore.messages.getString("general.gamemodes." + player.getGameMode().toString().toLowerCase())));
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
     }
 }

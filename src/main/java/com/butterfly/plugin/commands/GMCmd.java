@@ -51,7 +51,7 @@ public class GMCmd implements CommandExecutor {
         MessageManager.sendMessage(player,
                                     Message.CMD_GM_OTHERS,
                                     (s) -> s.replace("%target%", target.getName())
-                                            .replace("%gamemode%", ButterflyCore.config.getString("general.gamemodes." + target.getGameMode().toString().toLowerCase())));
+                                            .replace("%gamemode%", ButterflyCore.messages.getString("general.gamemodes." + target.getGameMode().toString().toLowerCase())));
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
         return false;
     }

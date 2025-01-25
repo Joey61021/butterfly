@@ -46,7 +46,10 @@ public enum Message {
     CMD_DISGUISE_DISGUISED("commands.disguise.disguised"),
 
     CMD_UNDIGUISE_NOT_DISGUISED("commands.undisguise.not-disguised"),
-    CMD_UNDIGUISE_UNDISGUISED("commands.undisguise.undisguised");
+    CMD_UNDIGUISE_UNDISGUISED("commands.undisguise.undisguised"),
+
+    CMD_HEAL_HEALED_SELF("commands.heal.healed-self"),
+    CMD_HEAL_HEALED_OTHER("commands.heal.healed-other");
 
     @Getter @NonNull
     private final String path;

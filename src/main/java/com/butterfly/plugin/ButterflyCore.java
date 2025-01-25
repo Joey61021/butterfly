@@ -13,7 +13,7 @@ public class ButterflyCore extends JavaPlugin {
 
     public static ButterflyCore instance;
 
-    public static Config config;
+    public static Config messages;
 
     @Override
     public void onEnable() {
@@ -23,7 +23,7 @@ public class ButterflyCore extends JavaPlugin {
     }
 
     void loadConfig() {
-        config = new Config(this, getDataFolder(), "config", "config.yml");
+        messages = new Config(this, getDataFolder(), "messages", "messages.yml");
     }
 
     void registerCommands() {
@@ -41,6 +41,7 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("unnick").setExecutor(new UnnickCmd());
         getCommand("disguise").setExecutor(new DisguiseCmd());
         getCommand("undisguise").setExecutor(new UndisguiseCmd());
+        getCommand("heal").setExecutor(new HealCmd());
     }
 
     void registerListeners() {
