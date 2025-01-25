@@ -43,6 +43,6 @@ commands:
     invalid: "&c%entity% is not a valid entity type!"
     already-disguised: "&cYou are already disguised!"
     disguised: "&aYou have been disguised successfully!"
-  undisguised:
+  undisguise:
     not-disguised: "&cYou are not disguised!"
     undisguised: "&eYou have been undisguised!"

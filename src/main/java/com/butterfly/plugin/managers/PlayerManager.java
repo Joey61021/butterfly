@@ -10,6 +10,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -99,7 +101,7 @@ public class PlayerManager {
 
     public static Disguise getDisguise(Player player) {
         for (Disguise disguise : disguises) {
-            if (disguise.getPlayer().getUniqueId() == player.getUniqueId()) {
+            if (disguise.getPlayer().getUniqueId().equals(player.getUniqueId())) {
                 return disguise;
             }
         }
@@ -127,10 +129,20 @@ public class PlayerManager {
         disguises.add(disguise);
         entity.setGravity(false);
         player.setCollidable(false);
-        ((LivingEntity) entity).setAI(false);
-        ((LivingEntity) entity).setCollidable(false);
-        ((LivingEntity) entity).setHealth(player.getHealth());
-        ((LivingEntity) entity).setMaxHealth(player.getMaxHealth());
+
+        LivingEntity livingEntity = (LivingEntity) entity;
+        livingEntity.setAI(false);
+        livingEntity.setCollidable(false);
+        livingEntity.setHealth(player.getHealth());
+        livingEntity.setMaxHealth(player.getMaxHealth());
+
+        Scoreboard scoreboard = Bukkit.getScoreboardManager().getMainScoreboard();
+        Team team = scoreboard.getTeam("nocollide");
+        if (team == null) {
+            team = scoreboard.registerNewTeam("nocollide");
+            team.setOption(Team.Option.COLLISION_RULE, Team.OptionStatus.NEVER);
+        }
+        team.addEntry(player.getName());
 
         MessageManager.sendMessage(player, Message.CMD_DISGUISE_DISGUISED);
     }

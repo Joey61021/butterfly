@@ -23,14 +23,15 @@ public class FlyCmd implements CommandExecutor {
             return false;
         }
 
-        if (player.isFlying()) {
+        if (player.getAllowFlight()) {
             player.setFlying(false);
+            player.setAllowFlight(false);
             MessageManager.sendMessage(player, Message.CMD_FLY_TOGGLE_OFF);
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
             return false;
         }
 
-        player.setFlying(true);
+        player.setAllowFlight(true);
         MessageManager.sendMessage(player, Message.CMD_FLY_TOGGLE_ON);
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
         return false;
