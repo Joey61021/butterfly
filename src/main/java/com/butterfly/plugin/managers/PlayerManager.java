@@ -7,6 +7,7 @@ import com.butterfly.plugin.utilities.Nick;
 import com.butterfly.plugin.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
@@ -114,11 +115,13 @@ public class PlayerManager {
         return null;
     }
 
-    public static void setDisguise(Player player, Entity entity) {
+    public static void setDisguise(Player player, EntityType entityType) {
         if (getDisguise(player) != null) {
             MessageManager.sendMessage(player, Message.CMD_DISGUISE_ALREADY_DISGUISED);
             return;
         }
+
+        Entity entity = player.getWorld().spawnEntity(player.getLocation(), entityType);
 
         Disguise disguise = new Disguise(player, entity);
         disguises.add(disguise);

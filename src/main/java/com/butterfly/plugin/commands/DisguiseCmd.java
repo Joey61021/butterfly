@@ -6,7 +6,6 @@ import com.butterfly.plugin.managers.message.MessageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
@@ -36,8 +35,7 @@ public class DisguiseCmd implements CommandExecutor {
         }
 
         try {
-            Entity entity = player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(args[0].toUpperCase()));
-            PlayerManager.setDisguise(player, entity);
+            PlayerManager.setDisguise(player, EntityType.valueOf(args[0].toUpperCase()));
         } catch (IllegalArgumentException error) {
             MessageManager.sendMessage(player,
                                         Message.CMD_DISGUISE_INVALID,

@@ -24,9 +24,9 @@ commands:
   item:
     aliases: [i]
   nick:
-    aliases: []
+    aliases: [nickname]
   unnick:
-    aliases: []
+    aliases: [unnickname]
   disguise:
     aliases: []
   undisguise:
