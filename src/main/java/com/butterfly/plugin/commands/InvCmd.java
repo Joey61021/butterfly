@@ -45,7 +45,7 @@ public class InvCmd implements CommandExecutor {
 
         ItemStack divider = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         ItemMeta meta = divider.getItemMeta();
-        meta.setDisplayName(Utils.color(""));
+        meta.setDisplayName(Utils.color("&0#"));
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
         divider.setItemMeta(meta);
 
