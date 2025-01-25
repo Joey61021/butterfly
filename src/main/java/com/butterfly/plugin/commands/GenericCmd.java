@@ -58,7 +58,9 @@ public class GenericCmd implements CommandExecutor {
         }
 
         if (target.getGameMode() == gamemode) {
-            MessageManager.sendMessage(player, Message.GENERAL_ALREADY_IN_GM_OTHER);
+            MessageManager.sendMessage(player,
+                                        Message.GENERAL_ALREADY_IN_GM_OTHER,
+                                        (s) -> s.replace("%target%", target.getName()));
             return false;
         }
 

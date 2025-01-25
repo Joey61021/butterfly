@@ -33,8 +33,8 @@ commands:
     given: "&fYou have been given &ex%amount% %item%&f!"
   nick:
     too-long: "&cYour nickname cannot exceed 16 characters!"
-    already-nicked: "&eYou are already nicked as %nick%!"
-    nicked: "&fYou have nicked as &e%nick%&e!"
+    already-nicked: "&eYou are already nicked as %nick%&f!"
+    nicked: "&fYou have nicked as &e%nick%&f!"
   unnicked:
     not-nicked: "&cYou are not nicked!"
     unnicked: "&eYour nickname has been removed!"

@@ -32,6 +32,7 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("gm").setExecutor(new GMCmd());
         getCommand("gms").setExecutor(new GenericCmd());
         getCommand("gmsp").setExecutor(new GenericCmd());
+        getCommand("build").setExecutor(new BuildCmd());
         getCommand("vanish").setExecutor(new VanishCmd());
         getCommand("inv").setExecutor(new InvCmd());
         getCommand("fly").setExecutor(new FlyCmd());
@@ -51,8 +52,10 @@ public class ButterflyCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
         getServer().getPluginManager().registerEvents(new DeathListener(), this);
         getServer().getPluginManager().registerEvents(new HealListener(), this);
+        getServer().getPluginManager().registerEvents(new InteractListener(), this);
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
+        getServer().getPluginManager().registerEvents(new SneakListener(), this);
     }
 }

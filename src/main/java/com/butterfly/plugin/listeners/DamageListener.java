@@ -32,7 +32,7 @@ public class DamageListener implements Listener {
             return;
         }
 
-        if (disguise.getPlayer().getGameMode() == GameMode.CREATIVE) {
+        if (disguise.getPlayer().getGameMode() == GameMode.CREATIVE || !event.getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK)) {
             event.setCancelled(true);
             return;
         }
