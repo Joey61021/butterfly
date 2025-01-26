@@ -1,6 +1,7 @@
 package com.butterfly.plugin.listeners.world;
 
 import com.butterfly.plugin.commands.BuildCmd;
+import com.butterfly.plugin.managers.InventoryManager;
 import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
@@ -19,6 +20,10 @@ public class PlaceListener implements Listener {
         if (!BuildCmd.build.contains(player) && (player.getGameMode() == GameMode.CREATIVE || PlayerManager.vanish.contains(player))) {
             MessageManager.sendMessage(player, Message.GENERAL_UNABLE_TO_BUILD);
             event.setCancelled(true);
+        }
+
+        if (InventoryManager.isBeingTracked(player)) {
+            InventoryManager.updateInventory(player);
         }
     }
 }

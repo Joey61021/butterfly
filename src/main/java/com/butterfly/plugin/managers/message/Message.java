@@ -15,6 +15,7 @@ public enum Message {
     GENERAL_ALREADY_IN_GM_OTHER("general.messages.already-in-gm.other"),
     GENERAL_UNABLE_TO_BUILD("general.messages.unable-to-build"),
     GENERAL_DISGUISE_REMOVED("general.messages.disguise-removed"),
+    GENERAL_BLACKLISTED("general.messages.blacklisted"),
 
     CMD_GM_SELF("commands.gm.self"),
     CMD_GM_OTHERS("commands.gm.other"),
@@ -45,7 +46,7 @@ public enum Message {
     CMD_DISGUISE_DISGUISED("commands.disguise.disguised"),
 
     CMD_UNDIGUISE_NOT_DISGUISED("commands.undisguise.not-disguised"),
-    CMD_UNDIGUISE_UNDISGUISED("commands.undisguise.undisguised"),
+    CMD_UNDIGUISE_UNDISGUISED_OTHER("commands.undisguise.undisguised-other"),
 
     CMD_HEAL_HEALED_SELF("commands.heal.healed-self"),
     CMD_HEAL_HEALED_OTHER("commands.heal.healed-other");

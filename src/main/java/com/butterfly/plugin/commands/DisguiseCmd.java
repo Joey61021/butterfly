@@ -4,6 +4,7 @@ import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Disguise;
+import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,13 +32,33 @@ public class DisguiseCmd implements CommandExecutor {
             return false;
         }
 
+        Player target = player;
+        if (args.length == 2) {
+            target = Bukkit.getPlayer(args[1]);
+        }
+
+        if (target == null) {
+            MessageManager.sendMessage(player, Message.GENERAL_NO_PLAYER);
+            return false;
+        }
+        
+        LivingEntity livingEntity = null;
         try {
-            LivingEntity livingEntity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(args[0].toUpperCase()));
-            PlayerManager.setDisguise(player, livingEntity);
+            livingEntity = (LivingEntity) target.getWorld().spawnEntity(target.getLocation(), EntityType.valueOf(args[0].toUpperCase()));
+            PlayerManager.setDisguise(target, livingEntity);
+
+            Player finalTarget = target;
+            MessageManager.sendMessage(player,
+                                        Message.CMD_DISGUISE_DISGUISED,
+                                        (s) -> s.replace("%target%", finalTarget.getDisplayName())
+                                                .replace("%entity%", args[0].toUpperCase()));
         } catch (IllegalArgumentException error) {
             MessageManager.sendMessage(player,
                                         Message.CMD_DISGUISE_INVALID,
                                         (s) -> s.replace("%entity%", args[0]));
+            if (livingEntity != null) {
+                livingEntity.remove();
+            }
         }
         return false;
     }

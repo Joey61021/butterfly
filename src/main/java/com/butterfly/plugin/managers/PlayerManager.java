@@ -157,6 +157,7 @@ public class PlayerManager {
         player.setMaxHealth(livingEntity.getMaxHealth());
         player.setHealth(livingEntity.getHealth());
         player.hideEntity(ButterflyCore.instance, livingEntity);
+        player.setFoodLevel(20);
         player.getInventory().clear();
 
         for (DisguiseAbilities abilities : DisguiseAbilities.values()) {
@@ -173,7 +174,5 @@ public class PlayerManager {
         for (Player players : Bukkit.getOnlinePlayers()) {
             players.hidePlayer(player);
         }
-
-        MessageManager.sendMessage(player, Message.CMD_DISGUISE_DISGUISED);
     }
 }

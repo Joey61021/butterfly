@@ -11,6 +11,7 @@ general:
     invalid-args: "&cMissing arguments or incorrect command usage."
     unable-to-build: "&cYou are unable to build without enabling build mode with /build first!"
     disguise-removed: "&cYour disguised has been removed!"
+    blacklisted: '&cYour message has been blocked as it may have contained a blacklisted word!'
     already-in-gm:
       self: '&cYou are already in this gamemode!'
       other: '&c%target% is already in this gamemode!'
@@ -42,9 +43,10 @@ commands:
     unnicked: "&eYour nickname has been removed!"
   disguise:
     invalid: "&c%entity% is not a valid entity type!"
-    disguised: "&aYou have been disguised successfully!"
+    disguised: "&b%target% &fhas been disguised as a &e%entity%&f!"
   undisguise:
-    not-disguised: "&cYou are not disguised!"
+    not-disguised: "&cNo disguise to remove!"
+    undisguised-other: "&c%target% has been undisguised!"
   heal:
     healed-self: "&dYou &fhave been healed!"
     healed-other: "&d%target% &fhas been healed!"
