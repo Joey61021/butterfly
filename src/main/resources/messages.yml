@@ -29,8 +29,8 @@ commands:
   inv:
     opening: "&fOpening %player%'s &finventory..."
   fly:
-    toggle-on: "&fFly has been toggled &a&lON&f!"
-    toggle-off: "&fFly has been toggled &c&lOFF&f!"
+    toggle-on: "Fly has been toggled &a&lON&f for &e%target%&f!"
+    toggle-off: "Fly has been toggled &c&lOFF&f for &e%target%&f!!"
   item:
     invalid: "&c%item% is not a valid item type!"
     given: "&fYou have been given &ex%amount% %item%&f!"

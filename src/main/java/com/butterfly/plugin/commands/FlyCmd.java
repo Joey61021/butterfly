@@ -2,6 +2,7 @@ package com.butterfly.plugin.commands;
 
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,16 +24,32 @@ public class FlyCmd implements CommandExecutor {
             return false;
         }
 
-        if (player.getAllowFlight()) {
-            player.setFlying(false);
-            player.setAllowFlight(false);
-            MessageManager.sendMessage(player, Message.CMD_FLY_TOGGLE_OFF);
+        Player target = player;
+        if (args.length == 1) {
+            target = Bukkit.getPlayer(args[0]);
+        }
+
+        if (target == null) {
+            MessageManager.sendMessage(player, Message.GENERAL_NO_PLAYER);
+            return false;
+        }
+
+        Player finalTarget = target;
+        if (target.getAllowFlight()) {
+            target.setFlying(false);
+            target.setAllowFlight(false);
+            MessageManager.sendMessage(player,
+                                        Message.CMD_FLY_TOGGLE_OFF,
+                                        (s) -> s.replace("%target%", finalTarget.getDisplayName()));
             player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
             return false;
         }
 
-        player.setAllowFlight(true);
-        MessageManager.sendMessage(player, Message.CMD_FLY_TOGGLE_ON);
+        target.setAllowFlight(true);
+
+        MessageManager.sendMessage(player,
+                                    Message.CMD_FLY_TOGGLE_ON,
+                                    (s) -> s.replace("%target%", finalTarget.getDisplayName()));
         player.playSound(player.getLocation(), Sound.ENTITY_EXPERIENCE_ORB_PICKUP, 1.0F, 1.0F);
         return false;
     }
