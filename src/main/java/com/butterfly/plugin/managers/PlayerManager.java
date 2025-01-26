@@ -15,7 +15,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
 public class PlayerManager {
