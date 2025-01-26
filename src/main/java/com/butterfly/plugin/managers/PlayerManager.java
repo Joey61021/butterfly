@@ -66,7 +66,10 @@ public class PlayerManager {
     }
 
     public static void setNickname(Player player, String nickname) {
-        Optional.ofNullable(getNick(player)).ifPresent(nicknames::remove);
+        Nick fetched = getNick(player);
+        if (fetched != null) {
+            nicknames.remove(fetched);
+        }
 
         Nick nick = new Nick(player, nickname, player.getDisplayName());
         nicknames.add(nick);
