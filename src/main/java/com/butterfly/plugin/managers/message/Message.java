@@ -36,7 +36,6 @@ public enum Message {
     CMD_ITEM_GIVEN("commands.item.given"),
 
     CMD_NICK_TOO_LONG("commands.nick.too-long"),
-    CMD_NICK_ALREADY_NICKED("commands.nick.already-nicked"),
     CMD_NICK_NICKED("commands.nick.nicked"),
 
     CMD_UNNICK_NOT_NICKED("commands.unnick.not-nicked"),

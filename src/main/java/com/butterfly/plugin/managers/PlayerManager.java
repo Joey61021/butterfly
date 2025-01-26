@@ -15,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 public class PlayerManager {
@@ -65,13 +66,7 @@ public class PlayerManager {
     }
 
     public static void setNickname(Player player, String nickname) {
-        Nick currentNick = getNick(player);
-        if (currentNick != null) {
-            MessageManager.sendMessage(player,
-                                        Message.CMD_NICK_ALREADY_NICKED,
-                                        (s) -> s.replace("%nick%", currentNick.getNickname()));
-            return;
-        }
+        Optional.ofNullable(getNick(player)).ifPresent(nicknames::remove);
 
         Nick nick = new Nick(player, nickname, player.getDisplayName());
         nicknames.add(nick);
