@@ -40,7 +40,7 @@ public class InvCmd implements CommandExecutor {
             return false;
         }
 
-        MessageManager.sendMessage(player, Message.CMD_INV, (s) -> s.replace("%player%", target.getDisplayName()));
+        MessageManager.sendMessage(player, Message.CMD_INV_OPENING, (s) -> s.replace("%player%", target.getDisplayName()));
         Inventory inv = Bukkit.createInventory(null, 6 * 9, Utils.color("&8" + target.getName() + "'s inventory"));
 
         ItemStack divider = new ItemStack(Material.BLACK_STAINED_GLASS_PANE);

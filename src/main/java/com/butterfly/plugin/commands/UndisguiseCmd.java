@@ -30,10 +30,7 @@ public class UndisguiseCmd implements CommandExecutor {
             return false;
         }
 
-        player.setCollidable(true);
-        disguise.getEntity().remove();
-        PlayerManager.disguises.remove(disguise);
-        MessageManager.sendMessage(player, Message.CMD_UNDIGUISE_UNDISGUISED);
+        PlayerManager.removeDisguise(disguise);
         return false;
     }
 }

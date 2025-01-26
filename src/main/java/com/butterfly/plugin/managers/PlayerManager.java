@@ -1,5 +1,7 @@
 package com.butterfly.plugin.managers;
 
+import com.butterfly.plugin.ButterflyCore;
+import com.butterfly.plugin.enums.DisguiseAbilities;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Disguise;
@@ -7,11 +9,10 @@ import com.butterfly.plugin.utilities.Nick;
 import com.butterfly.plugin.utilities.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -21,6 +22,7 @@ public class PlayerManager {
     public static Set<Player> vanish = new HashSet<>();
     public static Set<Nick> nicknames = new HashSet<>();
     public static Set<Disguise> disguises = new HashSet<>();
+    public static Set<Player> activeDisguises = new HashSet<>();
 
     public static void toggleVanish(Player player) {
         if (vanish.contains(player)) {
@@ -101,7 +103,7 @@ public class PlayerManager {
 
     public static Disguise getDisguise(Player player) {
         for (Disguise disguise : disguises) {
-            if (disguise.getPlayer().getUniqueId().equals(player.getUniqueId())) {
+            if (disguise.getPlayer() == player) {
                 return disguise;
             }
         }
@@ -110,30 +112,67 @@ public class PlayerManager {
 
     public static Disguise getDisguise(Entity entity) {
         for (Disguise disguise : disguises) {
-            if (disguise.getEntity() == entity) {
+            if (disguise.getLivingEntity() == entity) {
                 return disguise;
             }
         }
         return null;
     }
 
-    public static void setDisguise(Player player, EntityType entityType) {
-        if (getDisguise(player) != null) {
-            MessageManager.sendMessage(player, Message.CMD_DISGUISE_ALREADY_DISGUISED);
-            return;
+    public static void removeDisguise(Disguise disguise) {
+        Player player = disguise.getPlayer();
+        disguise.getLivingEntity().remove();
+
+        disguises.remove(disguise);
+        activeDisguises.remove(player);
+
+        player.setMaxHealth(20);
+        player.setHealth(player.getMaxHealth());
+        player.getInventory().clear();
+
+        MessageManager.sendMessage(player, Message.GENERAL_DISGUISE_REMOVED);
+
+        if (!vanish.contains(player)) {
+            for (Player players : Bukkit.getOnlinePlayers()) {
+                players.showPlayer(player);
+            }
+        }
+    }
+
+    public static void setDisguise(Player player, LivingEntity livingEntity) {
+        Disguise fetchedDisguise = getDisguise(player);
+        if (fetchedDisguise != null) {
+            disguises.remove(fetchedDisguise);
+            fetchedDisguise.getLivingEntity().remove();
         }
 
-        Entity entity = player.getWorld().spawnEntity(player.getLocation(), entityType);
-
-        Disguise disguise = new Disguise(player, entity);
+        Disguise disguise = new Disguise(player, livingEntity);
+        activeDisguises.add(player);
         disguises.add(disguise);
-        entity.setGravity(false);
 
-        LivingEntity livingEntity = (LivingEntity) entity;
+        livingEntity.setGravity(false);
         livingEntity.setAI(false);
         livingEntity.setCollidable(false);
-        livingEntity.setHealth(player.getHealth());
-        livingEntity.setMaxHealth(player.getMaxHealth());
+
+        player.setMaxHealth(livingEntity.getMaxHealth());
+        player.setHealth(livingEntity.getHealth());
+        player.hideEntity(ButterflyCore.instance, livingEntity);
+        player.getInventory().clear();
+
+        for (DisguiseAbilities abilities : DisguiseAbilities.values()) {
+            if (abilities.getEntityType().equals(livingEntity.getType())) {
+                ItemStack item = abilities.getItem();
+                ItemMeta meta = item.getItemMeta();
+                meta.setDisplayName(Utils.color(abilities.getDisplay()));
+                item.setItemMeta(meta);
+
+                player.getInventory().addItem(item);
+            }
+        }
+
+        for (Player players : Bukkit.getOnlinePlayers()) {
+            players.hidePlayer(player);
+        }
 
         MessageManager.sendMessage(player, Message.CMD_DISGUISE_DISGUISED);
     }

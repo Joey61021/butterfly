@@ -14,6 +14,7 @@ public enum Message {
     GENERAL_ALREADY_IN_GM_SELF("general.messages.already-in-gm.self"),
     GENERAL_ALREADY_IN_GM_OTHER("general.messages.already-in-gm.other"),
     GENERAL_UNABLE_TO_BUILD("general.messages.unable-to-build"),
+    GENERAL_DISGUISE_REMOVED("general.messages.disguise-removed"),
 
     CMD_GM_SELF("commands.gm.self"),
     CMD_GM_OTHERS("commands.gm.other"),
@@ -21,7 +22,7 @@ public enum Message {
     CMD_BUILD_TOGGLE_ON("commands.build.toggle-on"),
     CMD_BUILD_TOGGLE_OFF("commands.build.toggle-off"),
 
-    CMD_INV("commands.inv"),
+    CMD_INV_OPENING("commands.inv.opening"),
 
     CMD_VANISH_DISGUISED("commands.vanish.disguised"),
     CMD_VANISH_TOGGLE_ON("commands.vanish.toggle-on"),
@@ -40,9 +41,7 @@ public enum Message {
     CMD_UNNICK_NOT_NICKED("commands.unnick.not-nicked"),
     CMD_UNNICK_UNNICKED("commands.unnick.unnicked"),
 
-    CMD_DISGUISE_NOT_VANISHED("commands.disguise.not-vanished"),
     CMD_DISGUISE_INVALID("commands.disguise.invalid"),
-    CMD_DISGUISE_ALREADY_DISGUISED("commands.disguise.already-disguised"),
     CMD_DISGUISE_DISGUISED("commands.disguise.disguised"),
 
     CMD_UNDIGUISE_NOT_DISGUISED("commands.undisguise.not-disguised"),

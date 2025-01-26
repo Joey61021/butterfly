@@ -18,12 +18,12 @@ public class DeathListener implements Listener {
             return;
         }
 
-        PlayerManager.disguises.remove(disguise);
-
-        if (event.getEntity() == disguise.getEntity()) {
+        PlayerManager.removeDisguise(disguise);
+        if (event.getEntity() == disguise.getLivingEntity()) {
             event.getDrops().clear();
             return;
         }
-        disguise.getEntity().remove();
+
+        disguise.getLivingEntity().remove();
     }
 }

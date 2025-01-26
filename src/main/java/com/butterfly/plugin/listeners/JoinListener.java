@@ -14,9 +14,10 @@ public class JoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        player.setMaxHealth(20);
 
         for (Player players : Bukkit.getOnlinePlayers()) {
-            if (PlayerManager.vanish.contains(players)) {
+            if (PlayerManager.vanish.contains(players) || PlayerManager.activeDisguises.contains(players)) {
                 player.hidePlayer(players);
             }
         }

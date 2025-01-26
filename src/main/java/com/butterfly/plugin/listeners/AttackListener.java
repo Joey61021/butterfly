@@ -11,12 +11,12 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class AttackListener implements Listener {
 
     @EventHandler
-    public void onDamage(EntityDamageByEntityEvent event) {
+    public void onAttack(EntityDamageByEntityEvent event) {
         Entity victim = event.getEntity();
         Entity attacker = event.getDamager();
         Disguise disguise = PlayerManager.getDisguise(attacker);
 
-        if (attacker instanceof Player && disguise != null && victim == disguise.getEntity()) {
+        if (attacker instanceof Player && disguise != null && victim == disguise.getLivingEntity()) {
             event.setCancelled(true);
         }
     }

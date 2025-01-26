@@ -23,10 +23,14 @@ public class QuitListener implements Listener {
             PlayerManager.nicknames.remove(nick);
         }
 
-        Disguise disguise = PlayerManager.getDisguise(player);
-        if (disguise != null) {
-            disguise.getEntity().remove();
-            PlayerManager.disguises.remove(disguise);
+        if (PlayerManager.activeDisguises.contains(player)) {
+            PlayerManager.activeDisguises.remove(player);
+
+            Disguise disguise = PlayerManager.getDisguise(player);
+            if (disguise != null) {
+                disguise.getLivingEntity().remove();
+                PlayerManager.disguises.remove(disguise);
+            }
         }
     }
 }

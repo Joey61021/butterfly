@@ -3,10 +3,12 @@ package com.butterfly.plugin.commands;
 import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
+import com.butterfly.plugin.utilities.Disguise;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 public class DisguiseCmd implements CommandExecutor {
@@ -24,18 +26,14 @@ public class DisguiseCmd implements CommandExecutor {
             return false;
         }
 
-        if (!PlayerManager.vanish.contains(player)) {
-            MessageManager.sendMessage(player, Message.CMD_DISGUISE_NOT_VANISHED);
-            return false;
-        }
-
         if (args.length == 0) {
             MessageManager.sendMessage(player, Message.GENERAL_INVALID_ARGS);
             return false;
         }
 
         try {
-            PlayerManager.setDisguise(player, EntityType.valueOf(args[0].toUpperCase()));
+            LivingEntity livingEntity = (LivingEntity) player.getWorld().spawnEntity(player.getLocation(), EntityType.valueOf(args[0].toUpperCase()));
+            PlayerManager.setDisguise(player, livingEntity);
         } catch (IllegalArgumentException error) {
             MessageManager.sendMessage(player,
                                         Message.CMD_DISGUISE_INVALID,

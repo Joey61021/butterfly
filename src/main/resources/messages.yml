@@ -10,6 +10,7 @@ general:
     no-player: '&cSorry, but we could not find this player in your current server.'
     invalid-args: "&cMissing arguments or incorrect command usage."
     unable-to-build: "&cYou are unable to build without enabling build mode with /build first!"
+    disguise-removed: "&cYour disguised has been removed!"
     already-in-gm:
       self: '&cYou are already in this gamemode!'
       other: '&c%target% is already in this gamemode!'
@@ -24,7 +25,8 @@ commands:
     disguised: "&cYou cannot disable vanish while disguised!"
     toggle-on: "&fVanish has been toggled &a&lON&f!"
     toggle-off: "&fVanish has been toggled &c&lOFF&f!"
-  inv: "&fOpening %player%'s &finventory..."
+  inv:
+    opening: "&fOpening %player%'s &finventory..."
   fly:
     toggle-on: "&fFly has been toggled &a&lON&f!"
     toggle-off: "&fFly has been toggled &c&lOFF&f!"
@@ -39,13 +41,10 @@ commands:
     not-nicked: "&cYou are not nicked!"
     unnicked: "&eYour nickname has been removed!"
   disguise:
-    not-vanished: "&cYou need to be in vanished in order to run this command!"
     invalid: "&c%entity% is not a valid entity type!"
-    already-disguised: "&cYou are already disguised!"
     disguised: "&aYou have been disguised successfully!"
   undisguise:
     not-disguised: "&cYou are not disguised!"
-    undisguised: "&eYou have been undisguised!"
   heal:
     healed-self: "&dYou &fhave been healed!"
     healed-other: "&d%target% &fhas been healed!"

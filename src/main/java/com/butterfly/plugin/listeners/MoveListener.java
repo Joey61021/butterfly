@@ -14,10 +14,10 @@ public class MoveListener implements Listener {
         Player player = event.getPlayer();
 
         Disguise disguise = PlayerManager.getDisguise(player);
-        if (disguise == null || disguise.getEntity() == null) {
+        if (disguise == null || disguise.getLivingEntity() == null) {
             return;
         }
 
-        disguise.getEntity().teleport(player);
+        disguise.getLivingEntity().teleport(player);
     }
 }

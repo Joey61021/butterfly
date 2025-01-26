@@ -12,16 +12,12 @@ public class HealListener implements Listener {
 
     @EventHandler
     public void onHeal(EntityRegainHealthEvent event) {
+        if (!(event.getEntity() instanceof Player) || !PlayerManager.activeDisguises.contains((Player) event.getEntity())) {
+            return;
+        }
+
+        Player player = (Player) event.getEntity();
         Disguise disguise = PlayerManager.getDisguise(event.getEntity());
-        if (disguise == null) {
-            return;
-        }
-
-        if (event.getEntity() instanceof Player) {
-            event.setCancelled(true);
-            return;
-        }
-
-        disguise.getPlayer().setHealth(((LivingEntity) event.getEntity()).getHealth());
+        disguise.getLivingEntity().setHealth(player.getHealth());
     }
 }

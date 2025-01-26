@@ -17,6 +17,8 @@ public class ButterflyCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         loadConfig();
         registerCommands();
         registerListeners();
@@ -56,6 +58,5 @@ public class ButterflyCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
-        getServer().getPluginManager().registerEvents(new SneakListener(), this);
     }
 }

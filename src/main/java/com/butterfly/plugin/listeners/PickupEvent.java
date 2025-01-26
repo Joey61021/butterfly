@@ -16,7 +16,7 @@ public class PickupEvent implements Listener {
         Entity attacker = event.getDamager();
         Disguise disguise = PlayerManager.getDisguise(attacker);
 
-        if (attacker instanceof Player && disguise != null && victim == disguise.getEntity()) {
+        if (attacker instanceof Player && disguise != null && victim == disguise.getLivingEntity()) {
             event.setCancelled(true);
         }
     }
