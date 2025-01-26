@@ -4,13 +4,10 @@ import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Utils;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class HealCmd implements CommandExecutor {
 
@@ -30,6 +27,8 @@ public class HealCmd implements CommandExecutor {
         if (args.length == 0) {
             player.setHealth(player.getMaxHealth());
             player.setFoodLevel(20);
+            player.setFireTicks(0);
+            Utils.removePotionEffects(player);
             MessageManager.sendMessage(player, Message.CMD_HEAL_HEALED_SELF);
             return false;
         }
@@ -42,6 +41,8 @@ public class HealCmd implements CommandExecutor {
 
         target.setHealth(target.getMaxHealth());
         target.setFoodLevel(20);
+        target.setFireTicks(0);
+        Utils.removePotionEffects(target);
         MessageManager.sendMessage(player,
                                     Message.CMD_HEAL_HEALED_OTHER,
                                     (s) -> s.replace("%target%", target.getDisplayName()));
