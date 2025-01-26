@@ -10,7 +10,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 public class InventoryClickListener implements Listener {
 
     @EventHandler
-    public void onDrop(InventoryClickEvent event) {
+    public void onClick(InventoryClickEvent event) {
+        if (!(event.getWhoClicked() instanceof Player)) {
+            return;
+        }
         Player player = (Player) event.getWhoClicked();
 
         if (InventoryManager.isBeingTracked(player)) {
@@ -19,8 +22,8 @@ public class InventoryClickListener implements Listener {
         }
 
         InventoryMirror inv = InventoryManager.getViewingInventory(player);
-        if (inv != null) {
-            InventoryManager.alterInventory(inv, player.getOpenInventory().getTopInventory());
+        if (inv != null && event.getClickedInventory() == inv.getInventory()) {
+            event.setCancelled(true);
         }
     }
 }

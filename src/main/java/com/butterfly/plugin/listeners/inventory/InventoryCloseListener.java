@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 public class InventoryCloseListener implements Listener {
 
     @EventHandler
-    public void onDrop(InventoryCloseEvent event) {
+    public void onClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
 
         InventoryMirror inv = InventoryManager.getViewingInventory(player);

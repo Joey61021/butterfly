@@ -52,15 +52,10 @@ public class InventoryManager {
         }
     }
 
-    public static void alterInventory(InventoryMirror viewingInv, Inventory alteredInv) {
-        // TODO;
-    }
-
     public static Inventory populateInv(Inventory inv, Player target) {
         inv.clear();
 
         ItemStack[] items = target.getInventory().getContents();
-
         for (int i = 0; i < Math.min(items.length, inv.getSize()); i++) {
             if (items[i] != null && items[i].getType() != Material.AIR) {
                 if (i < inv.getSize()) {
@@ -76,9 +71,6 @@ public class InventoryManager {
         Bukkit.getScheduler().runTaskLater(ButterflyCore.instance, () -> {
             for (InventoryMirror invs : inventories) {
                 if (invs.getOwner().getUniqueId().equals(target.getUniqueId())) {
-                    if (target.isOp()) {
-                        target.sendMessage("" + invs.getViewers().size());
-                    }
                     populateInv(invs.getInventory(), invs.getOwner());
                     for (Player viewer : invs.getViewers()) {
                         if (viewer.getOpenInventory().getTopInventory().equals(invs.getInventory())) {
