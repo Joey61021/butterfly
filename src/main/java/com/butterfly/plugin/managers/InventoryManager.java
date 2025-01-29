@@ -73,19 +73,12 @@ public class InventoryManager {
                 if (invs.getOwner().getUniqueId().equals(target.getUniqueId())) {
                     populateInv(invs.getInventory(), invs.getOwner());
                     for (Player viewer : invs.getViewers()) {
-                        if (viewer.getOpenInventory().getTopInventory().equals(invs.getInventory())) {
-                            viewer.openInventory(invs.getInventory());
-                            viewer.updateInventory();
-                            break;
-                        }
-                        closeInventory(viewer);
+                        viewer.updateInventory();
                     }
-                    break;
                 }
             }
         }, 1L);
     }
-
 
     public static InventoryMirror establishInv(Player target) {
         for (InventoryMirror invs : inventories) {
