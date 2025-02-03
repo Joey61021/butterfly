@@ -1,7 +1,8 @@
-package com.butterfly.plugin.listeners.world;
+package com.butterfly.plugin.listeners;
 
 import com.butterfly.plugin.ButterflyCore;
 import com.butterfly.plugin.commands.BuildCmd;
+import com.butterfly.plugin.managers.InventoryManager;
 import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
@@ -12,30 +13,40 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashSet;
 import java.util.Set;
 
-public class BreakListener implements Listener {
+public class WorldListener implements Listener {
 
-    @EventHandler
-    public void onBreak(BlockBreakEvent event) {
-        Player player = event.getPlayer();
-
-        if (!BuildCmd.build.contains(player) && (player.getGameMode() == GameMode.CREATIVE || PlayerManager.vanish.contains(player))) {
+    public static void processBuild(Player player, Cancellable event) {
+        if (!BuildCmd.build.contains(player.getUniqueId()) && (player.getGameMode() == GameMode.CREATIVE || PlayerManager.vanish.contains(player.getUniqueId()))) {
             MessageManager.sendMessage(player, Message.GENERAL_UNABLE_TO_BUILD);
             event.setCancelled(true);
         }
 
-        if (player.getGameMode() == GameMode.CREATIVE) {
-            return;
+        if (InventoryManager.isBeingTracked(player)) {
+            InventoryManager.updateInventory(player);
         }
+    }
 
+    @EventHandler
+    public void onPlace(BlockPlaceEvent event) {
+        processBuild(event.getPlayer(), event);
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
         Block block = event.getBlock();
+
+        processBuild(player, event);
 
         if (isOre(block.getType())) {
             if (block.hasMetadata("veinProcessed")) {

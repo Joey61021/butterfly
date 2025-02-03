@@ -19,7 +19,7 @@ public class DropListener implements Listener {
             InventoryManager.updateInventory(player);
         }
 
-        if (PlayerManager.activeDisguises.contains(player)) {
+        if (PlayerManager.activeDisguises.contains(player.getUniqueId())) {
             event.setCancelled(true);
         }
     }

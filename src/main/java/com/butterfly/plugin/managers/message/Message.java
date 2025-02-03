@@ -29,6 +29,9 @@ public enum Message {
     CMD_VANISH_TOGGLE_ON("commands.vanish.toggle-on"),
     CMD_VANISH_TOGGLE_OFF("commands.vanish.toggle-off"),
 
+    CMD_STAFF_CHAT_TOGGLE_ON("commands.staff-chat.toggle-on"),
+    CMD_STAFF_CHAT_TOGGLE_OFF("commands.staff-chat.toggle-off"),
+
     CMD_FLY_TOGGLE_ON("commands.fly.toggle-on"),
     CMD_FLY_TOGGLE_OFF("commands.fly.toggle-off"),
 

@@ -16,23 +16,24 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 public class PlayerManager {
 
-    public static Set<Player> vanish = new HashSet<>();
+    public static Set<UUID> vanish = new HashSet<>();
     public static Set<Nick> nicknames = new HashSet<>();
     public static Set<Disguise> disguises = new HashSet<>();
-    public static Set<Player> activeDisguises = new HashSet<>();
+    public static Set<UUID> activeDisguises = new HashSet<>();
 
     public static void toggleVanish(Player player) {
-        if (vanish.contains(player)) {
+        if (vanish.contains(player.getUniqueId())) {
             Disguise disguise = getDisguise(player);
             if (disguise != null) {
                 MessageManager.sendMessage(player, Message.CMD_VANISH_DISGUISED);
                 return;
             }
 
-            vanish.remove(player);
+            vanish.remove(player.getUniqueId());
             MessageManager.sendMessage(player, Message.CMD_VANISH_TOGGLE_OFF);
 
             Nick nick = getNick(player);
@@ -43,7 +44,7 @@ public class PlayerManager {
             }
             return;
         }
-        vanish.add(player);
+        vanish.add(player.getUniqueId());
         MessageManager.sendMessage(player, Message.CMD_VANISH_TOGGLE_ON);
 
         player.setPlayerListName(Utils.color("&7[V] " + player.getName()));
@@ -75,7 +76,7 @@ public class PlayerManager {
 
         player.setDisplayName(Utils.color(nickname));
 
-        if (!vanish.contains(player)) {
+        if (!vanish.contains(player.getUniqueId())) {
             player.setPlayerListName(Utils.color(nickname));
         }
 
@@ -92,7 +93,7 @@ public class PlayerManager {
         }
 
         player.setDisplayName(Utils.color(nick.getPooledName()));
-        player.setPlayerListName(Utils.color((vanish.contains(player) ? "&7[V] " + player.getName() : nick.getPooledName())));
+        player.setPlayerListName(Utils.color((vanish.contains(player.getUniqueId()) ? "&7[V] " + player.getName() : nick.getPooledName())));
         nicknames.remove(nick);
 
         MessageManager.sendMessage(player, Message.CMD_UNNICK_UNNICKED);
@@ -121,7 +122,7 @@ public class PlayerManager {
         disguise.getLivingEntity().remove();
 
         disguises.remove(disguise);
-        activeDisguises.remove(player);
+        activeDisguises.remove(player.getUniqueId());
 
         player.setMaxHealth(20);
         player.setHealth(player.getMaxHealth());
@@ -129,7 +130,7 @@ public class PlayerManager {
 
         MessageManager.sendMessage(player, Message.GENERAL_DISGUISE_REMOVED);
 
-        if (!vanish.contains(player)) {
+        if (!vanish.contains(player.getUniqueId())) {
             for (Player players : Bukkit.getOnlinePlayers()) {
                 players.showPlayer(player);
             }
@@ -144,7 +145,7 @@ public class PlayerManager {
         }
 
         Disguise disguise = new Disguise(player, livingEntity);
-        activeDisguises.add(player);
+        activeDisguises.add(player.getUniqueId());
         disguises.add(disguise);
 
         livingEntity.setGravity(false);
@@ -160,8 +161,12 @@ public class PlayerManager {
         for (DisguiseAbilities abilities : DisguiseAbilities.values()) {
             if (abilities.getEntityType().equals(livingEntity.getType())) {
                 ItemStack item = abilities.getItem();
+
                 ItemMeta meta = item.getItemMeta();
-                meta.setDisplayName(Utils.color(abilities.getDisplay()));
+                if (meta != null) {
+                    meta.setDisplayName(Utils.color(abilities.getDisplay()));
+                }
+
                 item.setItemMeta(meta);
 
                 player.getInventory().addItem(item);

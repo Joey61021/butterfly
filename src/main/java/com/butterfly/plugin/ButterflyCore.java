@@ -6,8 +6,6 @@ import com.butterfly.plugin.commands.nick.UnnickCmd;
 import com.butterfly.plugin.listeners.*;
 import com.butterfly.plugin.listeners.inventory.InventoryClickListener;
 import com.butterfly.plugin.listeners.inventory.InventoryCloseListener;
-import com.butterfly.plugin.listeners.world.BreakListener;
-import com.butterfly.plugin.listeners.world.PlaceListener;
 import com.butterfly.plugin.utilities.Config;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -60,8 +58,6 @@ public class ButterflyCore extends JavaPlugin {
     void registerListeners() {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
-        getServer().getPluginManager().registerEvents(new BreakListener(), this);
-        getServer().getPluginManager().registerEvents(new PlaceListener(), this);
         getServer().getPluginManager().registerEvents(new AttackListener(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(), this);
         getServer().getPluginManager().registerEvents(new DamageListener(), this);
@@ -74,5 +70,6 @@ public class ButterflyCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new PickupListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
+        getServer().getPluginManager().registerEvents(new WorldListener(), this);
     }
 }

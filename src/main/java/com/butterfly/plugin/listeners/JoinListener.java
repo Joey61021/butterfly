@@ -17,7 +17,7 @@ public class JoinListener implements Listener {
         player.setMaxHealth(20);
 
         for (Player players : Bukkit.getOnlinePlayers()) {
-            if (PlayerManager.vanish.contains(players) || PlayerManager.activeDisguises.contains(players)) {
+            if (PlayerManager.vanish.contains(players.getUniqueId()) || PlayerManager.activeDisguises.contains(players.getUniqueId())) {
                 player.hidePlayer(players);
             }
         }

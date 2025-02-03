@@ -3,7 +3,6 @@ package com.butterfly.plugin.commands;
 import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
-import com.butterfly.plugin.utilities.Disguise;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

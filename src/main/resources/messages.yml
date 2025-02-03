@@ -26,6 +26,9 @@ commands:
     disguised: "&cYou cannot disable vanish while disguised!"
     toggle-on: "&fVanish has been toggled &a&lON&f!"
     toggle-off: "&fVanish has been toggled &c&lOFF&f!"
+  staff-chat:
+    toggle-on: "&fStaff chat has been toggled &a&lON&f!"
+    toggle-off: "&fStaff chat has been toggled &c&lOFF&f!"
   inv:
     opening: "&fOpening %player%'s &finventory..."
   fly:

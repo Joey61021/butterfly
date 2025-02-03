@@ -17,7 +17,7 @@ public class PickupListener implements Listener {
             InventoryManager.updateInventory(player);
         }
 
-        if (PlayerManager.vanish.contains(player) || PlayerManager.getDisguise(player) != null) {
+        if (PlayerManager.vanish.contains(player.getUniqueId()) || PlayerManager.getDisguise(player) != null) {
             event.setCancelled(true);
         }
     }

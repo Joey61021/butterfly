@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class BuildCmd implements CommandExecutor {
+public class StaffChatCmd implements CommandExecutor {
 
-    public static ArrayList<UUID> build = new ArrayList<>();
+    public static ArrayList<UUID> staffChat = new ArrayList<>();
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
         if (!(sender instanceof Player)) {
@@ -27,13 +27,14 @@ public class BuildCmd implements CommandExecutor {
             return false;
         }
 
-        if (build.contains(player.getUniqueId())) {
-            build.remove(player.getUniqueId());
-            MessageManager.sendMessage(player, Message.CMD_BUILD_TOGGLE_OFF);
+        if (staffChat.contains(player.getUniqueId())) {
+            staffChat.remove(player.getUniqueId());
+            MessageManager.sendMessage(player, Message.CMD_STAFF_CHAT_TOGGLE_OFF);
             return false;
         }
-        build.add(player.getUniqueId());
-        MessageManager.sendMessage(player, Message.CMD_BUILD_TOGGLE_ON);
+
+        staffChat.add(player.getUniqueId());
+        MessageManager.sendMessage(player, Message.CMD_STAFF_CHAT_TOGGLE_ON);
         return false;
     }
 }

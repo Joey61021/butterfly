@@ -14,17 +14,15 @@ public class QuitListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        if (PlayerManager.vanish.contains(player)) {
-            PlayerManager.vanish.remove(player);
-        }
+        PlayerManager.vanish.remove(player.getUniqueId());
 
         Nick nick = PlayerManager.getNick(player);
         if (nick != null) {
             PlayerManager.nicknames.remove(nick);
         }
 
-        if (PlayerManager.activeDisguises.contains(player)) {
-            PlayerManager.activeDisguises.remove(player);
+        if (PlayerManager.activeDisguises.contains(player.getUniqueId())) {
+            PlayerManager.activeDisguises.remove(player.getUniqueId());
 
             Disguise disguise = PlayerManager.getDisguise(player);
             if (disguise != null) {
