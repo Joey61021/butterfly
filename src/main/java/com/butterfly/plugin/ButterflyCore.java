@@ -55,6 +55,7 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("heal").setExecutor(new HealCmd());
         getCommand("staffchat").setExecutor(new StaffChatCmd());
         getCommand("push").setExecutor(new PushCmd());
+        getCommand("boomstick").setExecutor(new BoomStickCommand());
     }
 
     void registerListeners() {
@@ -71,6 +72,7 @@ public class ButterflyCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JoinListener(), this);
         getServer().getPluginManager().registerEvents(new MoveListener(), this);
         getServer().getPluginManager().registerEvents(new PickupListener(), this);
+        getServer().getPluginManager().registerEvents(new ProjectileListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
         getServer().getPluginManager().registerEvents(new WorldListener(), this);
     }

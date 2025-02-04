@@ -13,4 +13,5 @@ public class Permissions {
     public static String COMMAND_PUSH = "butterfly.command.push";
     public static String COMMAND_STAFF_CHAT = "butterfly.command.staff_chat";
     public static String COMMAND_VANISH = "butterfly.command.vanish";
+    public static String COMMAND_BOOM_STICK = "butterfly.command.boom_stick";
 }

@@ -1,5 +1,6 @@
 package com.butterfly.plugin.listeners;
 
+import com.butterfly.plugin.ButterflyCore;
 import com.butterfly.plugin.enums.DisguiseAbilities;
 import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.utilities.Disguise;
@@ -13,6 +14,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.util.Vector;
 
 import java.util.Set;
 
@@ -23,8 +26,26 @@ public class InteractListener implements Listener {
         Player player = event.getPlayer();
         ItemStack item = event.getItem();
 
+        if (item == null || item.getType().equals(Material.AIR) || item.getItemMeta() == null || !(event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
+            return;
+        }
+
+        if (item.getType().equals(Material.STICK) && item.getItemMeta().hasDisplayName() && item.getItemMeta().getDisplayName().toLowerCase().contains("boom stick"))
+        {
+            player.playSound(player.getLocation(), Sound.ENTITY_FIREWORK_ROCKET_LAUNCH, 1f, 1f);
+
+            Vector direction = player.getEyeLocation().getDirection().normalize();
+            Arrow arrow = player.getWorld().spawnArrow(player.getEyeLocation().add(direction.multiply(1)), direction, 2.5f, 0);
+
+            arrow.setShooter(player);
+            arrow.setMetadata("boomStick", new FixedMetadataValue(ButterflyCore.instance, true));
+            return;
+        }
+
+        // Do not proceed if player does not have a disguise
         Disguise disguise = PlayerManager.getDisguise(player);
-        if (disguise == null || item == null || item.getType().equals(Material.AIR) || !item.hasItemMeta() || !(event.getAction().equals(Action.LEFT_CLICK_AIR) || event.getAction().equals(Action.LEFT_CLICK_BLOCK))) {
+        if (disguise == null)
+        {
             return;
         }
 
