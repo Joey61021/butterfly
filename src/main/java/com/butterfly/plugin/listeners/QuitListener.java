@@ -26,6 +26,7 @@ public class QuitListener implements Listener {
 
             Disguise disguise = PlayerManager.getDisguise(player);
             if (disguise != null) {
+                player.getInventory().clear();
                 disguise.getLivingEntity().remove();
                 PlayerManager.disguises.remove(disguise);
             }

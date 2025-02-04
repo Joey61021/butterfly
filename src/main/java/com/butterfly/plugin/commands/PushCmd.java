@@ -9,8 +9,9 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
-public class HealCmd implements CommandExecutor {
+public class PushCmd implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -20,17 +21,12 @@ public class HealCmd implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        if (!(player.hasPermission(Permissions.COMMAND_HEAL))) {
+        if (!(player.hasPermission(Permissions.COMMAND_PUSH))) {
             MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
             return false;
         }
-
-        if (args.length == 0) {
-            player.setHealth(player.getMaxHealth());
-            player.setFoodLevel(20);
-            player.setFireTicks(0);
-            Utils.removePotionEffects(player);
-            MessageManager.sendMessage(player, Message.CMD_HEAL_HEALED_SELF);
+        if (args.length < 2) {
+            MessageManager.sendMessage(player, Message.GENERAL_INVALID_ARGS);
             return false;
         }
 
@@ -40,13 +36,16 @@ public class HealCmd implements CommandExecutor {
             return false;
         }
 
-        target.setHealth(target.getMaxHealth());
-        target.setFoodLevel(20);
-        target.setFireTicks(0);
-        Utils.removePotionEffects(target);
-        MessageManager.sendMessage(player,
-                                    Message.CMD_HEAL_HEALED_OTHER,
-                                    (s) -> s.replace("%target%", target.getDisplayName()));
+        int vel;
+        try {
+            vel = Integer.parseInt(args[1]);
+        } catch (Exception error) {
+            MessageManager.sendMessage(player, Message.GENERAL_INVALID_ARGS);
+            return false;
+        }
+
+        Vector direction = target.getLocation().getDirection().multiply(-vel).setY(0.5);
+        target.setVelocity(direction);
         return false;
     }
 }

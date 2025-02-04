@@ -4,6 +4,7 @@ import com.butterfly.plugin.ButterflyCore;
 import com.butterfly.plugin.managers.GamemodeManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
+import com.butterfly.plugin.utilities.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -21,7 +22,7 @@ public class GMCmd implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        if (!(player.hasPermission("butterfly.gm") || player.hasPermission("butterfly.*"))) {
+        if (!(player.hasPermission(Permissions.COMMAND_GAMEMODE))) {
             MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
             return false;
         }
@@ -31,7 +32,7 @@ public class GMCmd implements CommandExecutor {
             return false;
         }
         
-        if (!player.hasPermission("butterfly.others")) {
+        if (!player.hasPermission(Permissions.COMMAND_GAMEMODE)) {
             GamemodeManager.switchGamemode(player);
             return false;
         }

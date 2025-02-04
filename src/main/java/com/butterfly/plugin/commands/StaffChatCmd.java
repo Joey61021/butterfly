@@ -2,6 +2,7 @@ package com.butterfly.plugin.commands;
 
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
+import com.butterfly.plugin.utilities.Permissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -22,7 +23,7 @@ public class StaffChatCmd implements CommandExecutor {
 
         Player player = (Player) sender;
 
-        if (!player.hasPermission("fractured.admin")) {
+        if (!player.hasPermission(Permissions.COMMAND_STAFF_CHAT)) {
             MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
             return false;
         }

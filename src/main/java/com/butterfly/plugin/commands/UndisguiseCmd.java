@@ -4,6 +4,7 @@ import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Disguise;
+import com.butterfly.plugin.utilities.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -20,7 +21,7 @@ public class UndisguiseCmd implements CommandExecutor {
         }
 
         Player player = (Player) sender;
-        if (!(player.hasPermission("butterfly.item"))) {
+        if (!(player.hasPermission(Permissions.COMMAND_DISGUISE))) {
             MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
             return false;
         }
