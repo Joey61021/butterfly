@@ -35,5 +35,7 @@ commands:
     aliases: []
   heal:
     aliases: [h]
+  staffchat:
+    aliases: [sc]
   push:
     aliases: [p]

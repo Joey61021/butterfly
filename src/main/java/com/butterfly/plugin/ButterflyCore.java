@@ -53,6 +53,7 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("disguise").setExecutor(new DisguiseCmd());
         getCommand("undisguise").setExecutor(new UndisguiseCmd());
         getCommand("heal").setExecutor(new HealCmd());
+        getCommand("staffchat").setExecutor(new StaffChatCmd());
         getCommand("push").setExecutor(new PushCmd());
     }
 

@@ -72,7 +72,7 @@ public class DamageListener implements Listener {
         }
 
         int radius = 4;
-        int breakChance = 20;
+        int breakChance = 50;
 
         Set<Block> blocks = new HashSet<>();
         getNearbyBlocks(radius, location.add(0, -1, 0), blocks); // Get nearby blocks under player
@@ -81,11 +81,10 @@ public class DamageListener implements Listener {
 
         for (Block b : blocks)
         {
-            // todo fixme
-//                        if ((random.nextDouble() * 100) > breakChance)
-//                        {
-//                            continue;
-//                        }
+            if ((random.nextDouble() * 100) > breakChance)
+            {
+                continue;
+            }
 
             Material material = b.getType();
             if (!canBeBroken(material)) continue;
