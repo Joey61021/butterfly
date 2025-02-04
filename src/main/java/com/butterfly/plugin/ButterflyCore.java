@@ -56,6 +56,7 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("staffchat").setExecutor(new StaffChatCmd());
         getCommand("push").setExecutor(new PushCmd());
         getCommand("boomstick").setExecutor(new BoomStickCommand());
+        getCommand("broadcast").setExecutor(new BroadcastCmd());
     }
 
     void registerListeners() {

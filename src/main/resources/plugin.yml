@@ -41,3 +41,5 @@ commands:
     aliases: [p]
   boomstick:
     aliases: [bs]
+  broadcast:
+    aliases: [bc]
