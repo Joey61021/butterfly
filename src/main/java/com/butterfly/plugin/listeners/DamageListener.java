@@ -4,6 +4,7 @@ import com.butterfly.plugin.managers.PlayerManager;
 import com.butterfly.plugin.managers.WorldManager;
 import com.butterfly.plugin.utilities.Disguise;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -35,6 +36,7 @@ public class DamageListener implements Listener {
 
                 // Smash blocks on hard impact
                 if (event.getEntity().getFallDistance() > 10) {
+                    ((Player) entity).playSound(entity.getLocation(), Sound.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, 1.0F, 1.0F);
                     WorldManager.smash(entity.getLocation(), 4, 70);
                 }
             }
