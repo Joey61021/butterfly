@@ -52,3 +52,5 @@ commands:
   heal:
     healed-self: "&dYou &fhave been healed!"
     healed-other: "&d%target% &fhas been healed!"
+  clear:
+    cleared: "&e%items% &fhave been removed from %player%&f!"

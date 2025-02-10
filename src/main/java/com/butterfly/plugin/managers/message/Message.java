@@ -51,7 +51,9 @@ public enum Message {
     CMD_UNDIGUISE_UNDISGUISED_OTHER("commands.undisguise.undisguised-other"),
 
     CMD_HEAL_HEALED_SELF("commands.heal.healed-self"),
-    CMD_HEAL_HEALED_OTHER("commands.heal.healed-other");
+    CMD_HEAL_HEALED_OTHER("commands.heal.healed-other"),
+
+    CMD_CLEARED("commands.clear.cleared");
 
     @Getter @NonNull
     private final String path;

@@ -43,3 +43,5 @@ commands:
     aliases: [bs]
   broadcast:
     aliases: [bc]
+  clear:
+    aliases: [ci]
