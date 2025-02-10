@@ -53,7 +53,8 @@ public enum Message {
     CMD_HEAL_HEALED_SELF("commands.heal.healed-self"),
     CMD_HEAL_HEALED_OTHER("commands.heal.healed-other"),
 
-    CMD_CLEARED("commands.clear.cleared");
+    CMD_CLEAR_NO_ITEMS("commands.clear.no-items"),
+    CMD_CLEAR_CLEARED("commands.clear.cleared");
 
     @Getter @NonNull
     private final String path;

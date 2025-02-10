@@ -4,11 +4,13 @@ import com.butterfly.plugin.managers.message.Message;
 import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Permissions;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 public class ClearCommand implements CommandExecutor
 {
@@ -44,8 +46,36 @@ public class ClearCommand implements CommandExecutor
         final Player target = fetch;
         Inventory inv = target.getInventory();
 
-        MessageManager.sendMessage(player, Message.CMD_CLEARED, (s) -> s.replace("%items%", String.valueOf(inv.getContents().length)).replace("%player%", target.getDisplayName()));
+        int count = countItems(inv);
+
+        if (count == 0)
+        {
+            MessageManager.sendMessage(player, Message.CMD_CLEAR_NO_ITEMS);
+            return true;
+        }
+
+        MessageManager.sendMessage(player,
+                                    Message.CMD_CLEAR_CLEARED,
+                                    (s) -> s.replace("%items%", String.valueOf(countItems(inv)))
+                                            .replace("%player%", target.getDisplayName()));
         inv.clear();
         return true;
+    }
+
+    public static int countItems(Inventory inv)
+    {
+        int i = 0;
+
+        for (ItemStack item : inv.getContents())
+        {
+            if (item == null || item.getType() == Material.AIR)
+            {
+                continue;
+            }
+
+            i += item.getAmount();
+        }
+
+        return i;
     }
 }
