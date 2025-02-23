@@ -7,13 +7,22 @@ import com.butterfly.plugin.managers.message.MessageManager;
 import com.butterfly.plugin.utilities.Disguise;
 import com.butterfly.plugin.utilities.Nick;
 import com.butterfly.plugin.utilities.Utils;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
+import net.minecraft.server.level.ServerPlayer;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.lang.reflect.Field;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -24,6 +33,17 @@ public class PlayerManager {
     public static Set<Nick> nicknames = new HashSet<>();
     public static Set<Disguise> disguises = new HashSet<>();
     public static Set<UUID> activeDisguises = new HashSet<>();
+    public static final Field PROFILE_NAME;
+
+    static
+    {
+        try {
+            PROFILE_NAME = GameProfile.class.getDeclaredField("name");
+            PROFILE_NAME.setAccessible(true);
+        } catch (final Exception exception) {
+            throw new RuntimeException("Failed to load ModernDisguise's primary features", exception);
+        }
+    }
 
     public static void toggleVanish(Player player) {
         if (vanish.contains(player.getUniqueId())) {
@@ -80,9 +100,45 @@ public class PlayerManager {
             player.setPlayerListName(Utils.color(nickname));
         }
 
+        // set the player's username above their head
+        Location location = player.getLocation();
+        ServerPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
+
+        GameProfile profile = nmsPlayer.getGameProfile();
+
+        try
+        {
+            PROFILE_NAME.set(profile, nickname);
+        } catch (IllegalAccessException exception)
+        {
+            exception.printStackTrace();
+            return;
+        }
+
+        nmsPlayer.connection.send(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(nmsPlayer.getUUID())));
+        nmsPlayer.connection.send(
+                new ClientboundRespawnPacket(
+                        nmsPlayer.createCommonSpawnInfo(nmsPlayer.serverLevel()),
+                        ClientboundRespawnPacket.KEEP_ALL_DATA
+                )
+        );
+        player.teleport(location);
+        nmsPlayer.getServer().getPlayerList().sendLevelInfo(nmsPlayer, nmsPlayer.serverLevel());
+        nmsPlayer.connection.send(new ClientboundPlayerInfoUpdatePacket(
+                ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+                nmsPlayer));
+        nmsPlayer.connection.send(new ClientboundPlayerInfoUpdatePacket(
+                ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED,
+                nmsPlayer));
+        nmsPlayer.containerMenu.sendAllDataToRemote(); // originally player.updateInventory();
+        for (final Player serverPlayer : Bukkit.getOnlinePlayers()) {
+            serverPlayer.hidePlayer(player);
+            serverPlayer.showPlayer(player);
+        }
+
         MessageManager.sendMessage(player,
-                                    Message.CMD_NICK_NICKED,
-                                    (s) -> s.replace("%nick%", nickname));
+                Message.CMD_NICK_NICKED,
+                (s) -> s.replace("%nick%", nickname));
     }
 
     public static void removeNickname(Player player) {
