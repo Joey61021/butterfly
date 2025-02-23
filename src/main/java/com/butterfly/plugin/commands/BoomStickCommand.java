@@ -27,7 +27,7 @@ public class BoomStickCommand implements CommandExecutor {
         if (meta != null)
         {
             meta.setDisplayName(Utils.color("&cBoom Stick"));
-            meta.addEnchant(Enchantment.DURABILITY, 1, true);
+            meta.addEnchant(Enchantment.UNBREAKING, 1, true);
             meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
             item.setItemMeta(meta);
         }
