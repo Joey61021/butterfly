@@ -1,6 +1,6 @@
-author: Texxyy
-name: Butterfly
-main: com.butterfly.plugin.ButterflyCore
+author: tex
+name: butterfly
+main: com.butterfly.ButterflyCore
 api-version: 1.20
 version: ${project.version}
 
@@ -39,9 +39,9 @@ commands:
     aliases: [sc]
   push:
     aliases: [p]
-  boomstick:
-    aliases: [bs]
   broadcast:
     aliases: [bc]
   clear:
     aliases: [ci]
+  spawnmob:
+    aliases: []
