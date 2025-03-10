@@ -1,4 +1,4 @@
-package com.butterfly.listeners;
+package com.butterfly.events;
 
 import com.butterfly.managers.PlayerManager;
 import com.butterfly.util.Disguise;
@@ -11,12 +11,13 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class AttackListener implements Listener {
 
     @EventHandler
-    public void onAttack(EntityDamageByEntityEvent event) {
-        Entity victim = event.getEntity();
+    public void onAttack(EntityDamageByEntityEvent event)
+    {
         Entity attacker = event.getDamager();
         Disguise disguise = PlayerManager.getDisguise(attacker);
 
-        if (attacker instanceof Player && disguise != null && victim == disguise.getLivingEntity()) {
+        if (attacker instanceof Player && disguise != null && event.getEntity() == disguise.getLivingEntity())
+        {
             event.setCancelled(true);
         }
     }

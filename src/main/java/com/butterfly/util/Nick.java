@@ -1,18 +1,33 @@
 package com.butterfly.util;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.bukkit.entity.Player;
 
-public class Nick {
+public class Nick
+{
 
-    @Getter @Setter private Player player;
-    @Getter @Setter private String nickname;
-    @Getter @Setter private String pooledName;
+    private Player player;
+    private String nickname;
+    private String pooledName;
 
-    public Nick(Player player, String nickname, String pooledName) {
+    public Nick(Player player, String nickname, String pooledName)
+    {
         this.player = player;
         this.nickname = nickname;
         this.pooledName = pooledName;
+    }
+
+    public Player getPlayer()
+    {
+        return player;
+    }
+
+    public String getNickname()
+    {
+        return nickname;
+    }
+
+    public String getPooledName()
+    {
+        return pooledName;
     }
 }

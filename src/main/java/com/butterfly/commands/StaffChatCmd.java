@@ -1,7 +1,7 @@
 package com.butterfly.commands;
 
-import com.butterfly.managers.message.Message;
-import com.butterfly.managers.message.MessageManager;
+import com.butterfly.ButterflyCore;
+import com.butterfly.util.globals.Messages;
 import com.butterfly.util.globals.Permissions;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,31 +11,32 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class StaffChatCmd implements CommandExecutor {
+public class StaffChatCmd implements CommandExecutor
+{
 
     public static ArrayList<UUID> staffChat = new ArrayList<>();
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (!(sender instanceof Player)) {
-            MessageManager.sendMessage(sender, Message.GENERAL_NO_CONSOLE);
-            return false;
+        if (!(sender instanceof Player player))
+        {
+            sender.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_CONSOLE));
+            return true;
         }
 
-        Player player = (Player) sender;
-
-        if (!player.hasPermission(Permissions.COMMAND_STAFF_CHAT)) {
-            MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
-            return false;
+        if (!player.hasPermission(Permissions.COMMAND_STAFF_CHAT))
+        {
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_PERMISSION));
+            return true;
         }
 
         if (staffChat.contains(player.getUniqueId())) {
             staffChat.remove(player.getUniqueId());
-            MessageManager.sendMessage(player, Message.CMD_STAFF_CHAT_TOGGLE_OFF);
-            return false;
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_STAFF_CHAT_TOGGLE_OFF));
+            return true;
         }
 
         staffChat.add(player.getUniqueId());
-        MessageManager.sendMessage(player, Message.CMD_STAFF_CHAT_TOGGLE_ON);
-        return false;
+        player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_STAFF_CHAT_TOGGLE_ON));
+        return true;
     }
 }

@@ -1,7 +1,7 @@
 package com.butterfly.commands;
 
-import com.butterfly.managers.message.Message;
-import com.butterfly.managers.message.MessageManager;
+import com.butterfly.ButterflyCore;
+import com.butterfly.util.globals.Messages;
 import com.butterfly.util.globals.Permissions;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,17 +17,15 @@ public class ClearCommand implements CommandExecutor
 
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args)
     {
-        if (!(sender instanceof Player))
+        if (!(sender instanceof Player player))
         {
-            MessageManager.sendMessage(sender, Message.GENERAL_NO_CONSOLE);
+            sender.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_CONSOLE));
             return true;
         }
 
-        Player player = (Player) sender;
-
         if (!player.hasPermission(Permissions.COMMAND_CLEAR))
         {
-            MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_PERMISSION));
             return true;
         }
 
@@ -39,7 +37,7 @@ public class ClearCommand implements CommandExecutor
 
         if (fetch == null)
         {
-            MessageManager.sendMessage(player, Message.GENERAL_NO_PLAYER);
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_PLAYER));
             return true;
         }
 
@@ -50,14 +48,11 @@ public class ClearCommand implements CommandExecutor
 
         if (count == 0)
         {
-            MessageManager.sendMessage(player, Message.CMD_CLEAR_NO_ITEMS);
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_CLEAR_NO_ITEMS));
             return true;
         }
 
-        MessageManager.sendMessage(player,
-                                    Message.CMD_CLEAR_CLEARED,
-                                    (s) -> s.replace("%items%", String.valueOf(countItems(inv)))
-                                            .replace("%player%", target.getDisplayName()));
+        player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_CLEAR_CLEARED).replace("%items%", String.valueOf(countItems(inv))).replace("%player%", target.getDisplayName()));
         inv.clear();
         return true;
     }

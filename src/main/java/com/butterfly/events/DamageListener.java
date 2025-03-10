@@ -1,4 +1,4 @@
-package com.butterfly.listeners;
+package com.butterfly.events;
 
 import com.butterfly.managers.PlayerManager;
 import com.butterfly.managers.WorldManager;
@@ -12,10 +12,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class DamageListener implements Listener {
+public class DamageListener implements Listener
+{
 
     @EventHandler
-    public void onDamage(EntityDamageEvent event) {
+    public void onDamage(EntityDamageEvent event)
+    {
         Entity entity = event.getEntity();
         EntityDamageEvent.DamageCause cause = event.getCause();
 
@@ -42,17 +44,20 @@ public class DamageListener implements Listener {
             }
         }
 
-        if (!(entity instanceof LivingEntity)) {
+        if (!(entity instanceof LivingEntity))
+        {
             return;
         }
 
         Disguise disguise = PlayerManager.getDisguise(entity);
-        if (disguise == null || disguise.getPlayer() == null) {
+        if (disguise == null || disguise.getPlayer() == null)
+        {
             return;
         }
 
         // Prevent disguise suffocation
-        if (disguise.getPlayer().getGameMode() == GameMode.CREATIVE || cause.equals(EntityDamageEvent.DamageCause.SUFFOCATION)) {
+        if (disguise.getPlayer().getGameMode() == GameMode.CREATIVE || cause.equals(EntityDamageEvent.DamageCause.SUFFOCATION))
+        {
             event.setCancelled(true);
         }
     }

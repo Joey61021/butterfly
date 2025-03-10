@@ -3,40 +3,40 @@ package com.butterfly;
 import com.butterfly.commands.*;
 import com.butterfly.commands.nick.NickCmd;
 import com.butterfly.commands.nick.UnnickCmd;
-import com.butterfly.listeners.*;
-import com.butterfly.listeners.inventory.InventoryClickListener;
-import com.butterfly.listeners.inventory.InventoryCloseListener;
-import com.butterfly.util.Config;
+import com.butterfly.config.Config;
+import com.butterfly.events.*;
+import com.butterfly.events.inventory.InventoryClickListener;
+import com.butterfly.events.inventory.InventoryCloseListener;
+import com.butterfly.util.globals.Messages;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashSet;
 
-public class ButterflyCore extends JavaPlugin {
+public class ButterflyCore extends JavaPlugin
+{
 
-    public static ButterflyCore instance;
+    private static Config messages;
+    private static Config blacklist;
 
-    public static Config messages;
-    public static Config blacklist;
-
-    public static HashSet<String> blacklisted = new HashSet<>();
+    private static HashSet<String> blacklisted = new HashSet<>();
 
     @Override
-    public void onEnable() {
-        instance = this;
+    public void onEnable()
+    {
+        messages = new Config(this, Messages.class, "messages.yml");
+        blacklist = new Config(this, Object.class, "kits.yml");
 
-        loadConfig();
         registerCommands();
         registerListeners();
 
         blacklisted.addAll(blacklist.getStringList("words"));
+
+        System.out.println("[BUTTERFLY] World UID : " + Bukkit.getWorld("world").getUID());
     }
 
-    void loadConfig() {
-        messages = new Config(this, getDataFolder(), "messages", "messages.yml");
-        blacklist = new Config(this, getDataFolder(), "blacklist", "blacklist.yml");
-    }
-
-    void registerCommands() {
+    void registerCommands()
+    {
         getCommand("gma").setExecutor(new GenericCmd());
         getCommand("gmc").setExecutor(new GenericCmd());
         getCommand("gm").setExecutor(new GMCmd());
@@ -60,7 +60,8 @@ public class ButterflyCore extends JavaPlugin {
         getCommand("spawnmob").setExecutor(new SpawnMobCommand());
     }
 
-    void registerListeners() {
+    void registerListeners()
+    {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryCloseListener(), this);
         getServer().getPluginManager().registerEvents(new AttackListener(), this);
@@ -76,5 +77,15 @@ public class ButterflyCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PickupListener(), this);
         getServer().getPluginManager().registerEvents(new QuitListener(), this);
         getServer().getPluginManager().registerEvents(new WorldListener(), this);
+    }
+
+    public static Config getMessages()
+    {
+        return messages;
+    }
+
+    public static HashSet<String> getBlacklisted()
+    {
+        return blacklisted;
     }
 }

@@ -1,4 +1,4 @@
-package com.butterfly.listeners;
+package com.butterfly.events;
 
 import com.butterfly.managers.InventoryManager;
 import com.butterfly.managers.PlayerManager;
@@ -9,23 +9,28 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-public class DeathListener implements Listener {
+public class DeathListener implements Listener
+{
 
     @EventHandler
-    public void onDeath(EntityDeathEvent event) {
+    public void onDeath(EntityDeathEvent event)
+    {
         Entity entity = event.getEntity();
 
-        if (entity instanceof Player && InventoryManager.isBeingTracked((Player) entity)) {
+        if (entity instanceof Player && InventoryManager.isBeingTracked((Player) entity))
+        {
             InventoryManager.updateInventory(((Player) entity));
         }
 
         Disguise disguise = PlayerManager.getDisguise(entity);
-        if (disguise == null) {
+        if (disguise == null)
+        {
             return;
         }
 
         PlayerManager.removeDisguise(disguise);
-        if (event.getEntity() == disguise.getLivingEntity()) {
+        if (event.getEntity() == disguise.getLivingEntity())
+        {
             event.getDrops().clear();
             return;
         }

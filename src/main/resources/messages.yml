@@ -1,18 +1,13 @@
 general:
-  gamemodes:
-    survival: '&aSurvival'
-    creative: '&cCreative'
-    adventure: '&eAdventure'
-    spectator: '&dSpectator'
   messages:
-    no-console: '&cSorry, but you cannot use this command via console.'
-    no-permission: '&cSorry, but you do not have permission to perform this command.'
-    no-player: '&cSorry, but we could not find this player in your current server.'
-    invalid-args: "&cMissing arguments or incorrect command usage."
-    unable-to-build: "&cYou are unable to build without enabling build mode with /build first!"
-    disguise-removed: "&cYour disguised has been removed!"
+    no_console: '&cSorry, but you cannot use this command via console.'
+    no_permission: '&cSorry, but you do not have permission to perform this command.'
+    no_player: '&cSorry, but we could not find this player in your current server.'
+    invalid_args: "&cMissing arguments or incorrect command usage."
+    unable_to_build: "&cYou are unable to build without enabling build mode with /build first!"
+    disguise_removed: "&cYour disguised has been removed!"
     blacklisted: '&cYour message has been blocked as it may have contained a blacklisted word!'
-    already-in-gm:
+    already_in_gm:
       self: '&cYou are already in this gamemode!'
       other: '&c%target% is already in this gamemode!'
 commands:
@@ -20,40 +15,40 @@ commands:
     self: '&fYour gamemode has been set to %gamemode%'
     other: "&f%target%'s gamemode has been set to %gamemode%"
   build:
-    toggle-on: "&fBuild has been toggled &a&lON&f!"
-    toggle-off: "&fBuild has been toggled &c&lOFF&f!"
+    toggle_on: "&fBuild has been toggled &a&lON&f!"
+    toggle_off: "&fBuild has been toggled &c&lOFF&f!"
   vanish:
     disguised: "&cYou cannot disable vanish while disguised!"
-    toggle-on: "&fVanish has been toggled &a&lON&f!"
-    toggle-off: "&fVanish has been toggled &c&lOFF&f!"
-  staff-chat:
-    toggle-on: "&fStaff chat has been toggled &a&lON&f!"
-    toggle-off: "&fStaff chat has been toggled &c&lOFF&f!"
+    toggle_on: "&fVanish has been toggled &a&lON&f!"
+    toggle_off: "&fVanish has been toggled &c&lOFF&f!"
+  staff_chat:
+    toggle_on: "&fStaff chat has been toggled &a&lON&f!"
+    toggle_off: "&fStaff chat has been toggled &c&lOFF&f!"
   inv:
     opening: "&fOpening %player%'s &finventory..."
   fly:
-    toggle-on: "Fly has been toggled &a&lON&f for &e%target%&f!"
-    toggle-off: "Fly has been toggled &c&lOFF&f for &e%target%&f!!"
+    toggle_on: "Fly has been toggled &a&lON&f for &e%target%&f!"
+    toggle_off: "Fly has been toggled &c&lOFF&f for &e%target%&f!!"
   item:
     invalid: "&c%item% is not a valid item type!"
     given: "&fYou have been given &ex%amount% %item%&f!"
   nick:
-    too-long: "&cYour nickname cannot exceed 16 characters!"
+    too_long: "&cYour nickname cannot exceed 16 characters!"
     nicked: "&fYou have nicked as &e%nick%&f!"
   unnicked:
-    not-nicked: "&cYou are not nicked!"
+    not_nicked: "&cYou are not nicked!"
     unnicked: "&eYour nickname has been removed!"
   disguise:
     invalid: "&c%entity% is not a valid entity type!"
     disguised: "&b%target% &fhas been disguised as a &e%entity%&f!"
   undisguise:
-    not-disguised: "&cNo disguise to remove!"
-    undisguised-other: "&c%target% has been undisguised!"
+    not_disguised: "&cNo disguise to remove!"
+    undisguised_other: "&c%target% has been undisguised!"
   heal:
-    healed-self: "&dYou &fhave been healed!"
-    healed-other: "&d%target% &fhas been healed!"
+    healed_self: "&dYou &fhave been healed!"
+    healed_other: "&d%target% &fhas been healed!"
   clear:
-    no-items: "&cNo items were found!"
+    no_items: "&cNo items were found!"
     cleared: "&e%items% &fhave been removed from %player%&f!"
   spawnmob:
     invalid_mob: "&c%mob% is not a valid mob type!"

@@ -2,92 +2,99 @@ package com.butterfly.managers;
 
 import com.butterfly.ButterflyCore;
 import com.butterfly.enums.DisguiseAbilities;
-import com.butterfly.managers.message.Message;
-import com.butterfly.managers.message.MessageManager;
 import com.butterfly.util.Disguise;
 import com.butterfly.util.Nick;
 import com.butterfly.util.Utils;
-import com.mojang.authlib.GameProfile;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
-import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
-import net.minecraft.network.protocol.game.ClientboundRespawnPacket;
-import net.minecraft.server.level.ServerPlayer;
+import com.butterfly.util.globals.Messages;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_21_R3.entity.CraftPlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 
-import java.lang.reflect.Field;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class PlayerManager {
+public class PlayerManager
+{
 
     public static Set<UUID> vanish = new HashSet<>();
     public static Set<Nick> nicknames = new HashSet<>();
     public static Set<Disguise> disguises = new HashSet<>();
     public static Set<UUID> activeDisguises = new HashSet<>();
-    public static final Field PROFILE_NAME;
+//    public static final Field PROFILE_NAME;
 
     static
     {
-        try {
-            PROFILE_NAME = GameProfile.class.getDeclaredField("name");
-            PROFILE_NAME.setAccessible(true);
-        } catch (final Exception exception) {
+        try
+        {
+//            TODO -- fix
+//            PROFILE_NAME = GameProfile.class.getDeclaredField("name");
+//            PROFILE_NAME.setAccessible(true);
+        } catch (final Exception exception)
+        {
             throw new RuntimeException("Failed to load ModernDisguise's primary features", exception);
         }
     }
 
-    public static void toggleVanish(Player player) {
-        if (vanish.contains(player.getUniqueId())) {
+    public static void toggleVanish(Player player)
+    {
+        if (vanish.contains(player.getUniqueId()))
+        {
             Disguise disguise = getDisguise(player);
-            if (disguise != null) {
-                MessageManager.sendMessage(player, Message.CMD_VANISH_DISGUISED);
+            if (disguise != null)
+            {
+                player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_VANISH_DISGUISED));
                 return;
             }
 
             vanish.remove(player.getUniqueId());
-            MessageManager.sendMessage(player, Message.CMD_VANISH_TOGGLE_OFF);
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_VANISH_TOGGLE_OFF));
 
             Nick nick = getNick(player);
             player.setPlayerListName(Utils.color(nick == null ? player.getDisplayName() : nick.getNickname()));
 
-            for (Player players : Bukkit.getOnlinePlayers()) {
+            for (Player players : Bukkit.getOnlinePlayers())
+            {
                 players.showPlayer(player);
             }
             return;
         }
         vanish.add(player.getUniqueId());
-        MessageManager.sendMessage(player, Message.CMD_VANISH_TOGGLE_ON);
+        player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_VANISH_TOGGLE_ON));
 
         player.setPlayerListName(Utils.color("&7[V] " + player.getName()));
 
-        for (Player players : Bukkit.getOnlinePlayers()) {
-            if (!players.hasPermission("butter.vanish")) {
+        for (Player players : Bukkit.getOnlinePlayers())
+        {
+            if (!players.hasPermission("butter.vanish"))
+            {
                 players.hidePlayer(player);
             }
         }
     }
 
-    public static Nick getNick(Player player) {
-        for (Nick nicks : nicknames) {
-            if (nicks.getPlayer().getUniqueId() == player.getUniqueId()) {
+    public static Nick getNick(Player player)
+    {
+        for (Nick nicks : nicknames)
+        {
+            if (nicks.getPlayer().getUniqueId() == player.getUniqueId())
+            {
                 return nicks;
             }
         }
         return null;
     }
 
-    public static void setNickname(Player player, String nickname) {
+    public static void setNickname(Player player, String nickname)
+    {
         Nick fetched = getNick(player);
-        if (fetched != null) {
+        if (fetched != null)
+        {
             nicknames.remove(fetched);
         }
 
@@ -96,55 +103,58 @@ public class PlayerManager {
 
         player.setDisplayName(Utils.color(nickname));
 
-        if (!vanish.contains(player.getUniqueId())) {
+        if (!vanish.contains(player.getUniqueId()))
+        {
             player.setPlayerListName(Utils.color(nickname));
         }
 
         // set the player's username above their head
         Location location = player.getLocation();
-        ServerPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
+//        ServerPlayer nmsPlayer = ((CraftPlayer) player).getHandle();
 
-        GameProfile profile = nmsPlayer.getGameProfile();
+//        GameProfile profile = nmsPlayer.getGameProfile();
 
-        try
-        {
-            PROFILE_NAME.set(profile, nickname);
-        } catch (IllegalAccessException exception)
-        {
-            exception.printStackTrace();
-            return;
-        }
+//        try
+//        {
+//            PROFILE_NAME.set(profile, nickname);
+//        } catch (IllegalAccessException exception)
+//        {
+//            exception.printStackTrace();
+//            return;
+//        }
 
-        nmsPlayer.connection.send(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(nmsPlayer.getUUID())));
-        nmsPlayer.connection.send(
-                new ClientboundRespawnPacket(
-                        nmsPlayer.createCommonSpawnInfo(nmsPlayer.serverLevel()),
-                        ClientboundRespawnPacket.KEEP_ALL_DATA
-                )
-        );
+//        nmsPlayer.connection.send(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(nmsPlayer.getUUID())));
+//        nmsPlayer.connection.send(
+//                new ClientboundRespawnPacket(
+//                        nmsPlayer.createCommonSpawnInfo(nmsPlayer.serverLevel()),
+//                        ClientboundRespawnPacket.KEEP_ALL_DATA
+//                )
+//        );
         player.teleport(location);
-        nmsPlayer.getServer().getPlayerList().sendLevelInfo(nmsPlayer, nmsPlayer.serverLevel());
-        nmsPlayer.connection.send(new ClientboundPlayerInfoUpdatePacket(
-                ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
-                nmsPlayer));
-        nmsPlayer.connection.send(new ClientboundPlayerInfoUpdatePacket(
-                ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED,
-                nmsPlayer));
-        nmsPlayer.containerMenu.sendAllDataToRemote(); // originally player.updateInventory();
-        for (final Player serverPlayer : Bukkit.getOnlinePlayers()) {
+//        nmsPlayer.getServer().getPlayerList().sendLevelInfo(nmsPlayer, nmsPlayer.serverLevel());
+//        nmsPlayer.connection.send(new ClientboundPlayerInfoUpdatePacket(
+//                ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+//                nmsPlayer));
+//        nmsPlayer.connection.send(new ClientboundPlayerInfoUpdatePacket(
+//                ClientboundPlayerInfoUpdatePacket.Action.UPDATE_LISTED,
+//                nmsPlayer));
+//        nmsPlayer.containerMenu.sendAllDataToRemote(); // originally player.updateInventory();
+
+        for (Player serverPlayer : Bukkit.getOnlinePlayers())
+        {
             serverPlayer.hidePlayer(player);
             serverPlayer.showPlayer(player);
         }
 
-        MessageManager.sendMessage(player,
-                Message.CMD_NICK_NICKED,
-                (s) -> s.replace("%nick%", nickname));
+        player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_NICK_NICKED).replace("%nick%", nickname));
     }
 
-    public static void removeNickname(Player player) {
+    public static void removeNickname(Player player)
+    {
         Nick nick = getNick(player);
-        if (nick == null) {
-            MessageManager.sendMessage(player, Message.CMD_UNNICK_NOT_NICKED);
+        if (nick == null)
+        {
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_UNNICK_NOT_NICKED));
             return;
         }
 
@@ -152,28 +162,35 @@ public class PlayerManager {
         player.setPlayerListName(Utils.color((vanish.contains(player.getUniqueId()) ? "&7[V] " + player.getName() : nick.getPooledName())));
         nicknames.remove(nick);
 
-        MessageManager.sendMessage(player, Message.CMD_UNNICK_UNNICKED);
+        player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_UNNICK_UNNICKED));
     }
 
-    public static Disguise getDisguise(Player player) {
-        for (Disguise disguise : disguises) {
-            if (disguise.getPlayer() == player) {
+    public static Disguise getDisguise(Player player)
+    {
+        for (Disguise disguise : disguises)
+        {
+            if (disguise.getPlayer() == player)
+            {
                 return disguise;
             }
         }
         return null;
     }
 
-    public static Disguise getDisguise(Entity entity) {
-        for (Disguise disguise : disguises) {
-            if (disguise.getLivingEntity() == entity) {
+    public static Disguise getDisguise(Entity entity)
+    {
+        for (Disguise disguise : disguises)
+        {
+            if (disguise.getLivingEntity() == entity)
+            {
                 return disguise;
             }
         }
         return null;
     }
 
-    public static void removeDisguise(Disguise disguise) {
+    public static void removeDisguise(Disguise disguise)
+    {
         Player player = disguise.getPlayer();
         disguise.getLivingEntity().remove();
 
@@ -184,18 +201,22 @@ public class PlayerManager {
         player.setHealth(player.getMaxHealth());
         player.getInventory().clear();
 
-        MessageManager.sendMessage(player, Message.GENERAL_DISGUISE_REMOVED);
+        player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_DISGUISE_REMOVED));
 
-        if (!vanish.contains(player.getUniqueId())) {
-            for (Player players : Bukkit.getOnlinePlayers()) {
+        if (!vanish.contains(player.getUniqueId()))
+        {
+            for (Player players : Bukkit.getOnlinePlayers())
+            {
                 players.showPlayer(player);
             }
         }
     }
 
-    public static void setDisguise(Player player, LivingEntity livingEntity) {
+    public static void setDisguise(Player player, LivingEntity livingEntity)
+    {
         Disguise fetchedDisguise = getDisguise(player);
-        if (fetchedDisguise != null) {
+        if (fetchedDisguise != null)
+        {
             disguises.remove(fetchedDisguise);
             fetchedDisguise.getLivingEntity().remove();
         }
@@ -210,16 +231,19 @@ public class PlayerManager {
 
         player.setMaxHealth(livingEntity.getMaxHealth());
         player.setHealth(livingEntity.getHealth());
-        player.hideEntity(ButterflyCore.instance, livingEntity);
+        player.hideEntity(JavaPlugin.getPlugin(ButterflyCore.class), livingEntity);
         player.setFoodLevel(20);
         player.getInventory().clear();
 
-        for (DisguiseAbilities abilities : DisguiseAbilities.values()) {
-            if (abilities.getEntityType().equals(livingEntity.getType())) {
+        for (DisguiseAbilities abilities : DisguiseAbilities.values())
+        {
+            if (abilities.getEntityType().equals(livingEntity.getType()))
+            {
                 ItemStack item = abilities.getItem();
 
                 ItemMeta meta = item.getItemMeta();
-                if (meta != null) {
+                if (meta != null)
+                {
                     meta.setDisplayName(Utils.color(abilities.getDisplay()));
                 }
 
@@ -229,7 +253,8 @@ public class PlayerManager {
             }
         }
 
-        for (Player players : Bukkit.getOnlinePlayers()) {
+        for (Player players : Bukkit.getOnlinePlayers())
+        {
             players.hidePlayer(player);
         }
     }

@@ -1,8 +1,7 @@
 package com.butterfly.commands;
 
-import com.butterfly.managers.message.Message;
-import com.butterfly.managers.message.MessageManager;
-import com.butterfly.util.Utils;
+import com.butterfly.ButterflyCore;
+import com.butterfly.util.globals.Messages;
 import com.butterfly.util.globals.Permissions;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -18,19 +17,20 @@ public class SpawnMobCommand implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args)
     {
-        if (!(sender instanceof Player player)) {
-            MessageManager.sendMessage(sender, Message.GENERAL_NO_CONSOLE);
-            return false;
+        if (!(sender instanceof Player player))
+        {
+            sender.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_CONSOLE));
+            return true;
         }
 
         if (!(player.hasPermission(Permissions.COMMAND_PUSH)))
         {
-            MessageManager.sendMessage(player, Message.GENERAL_NO_PERMISSION);
-            return false;
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_NO_PERMISSION));
+            return true;
         }
         if (args.length == 0)
         {
-            MessageManager.sendMessage(player, Message.GENERAL_INVALID_ARGS);
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_INVALID_ARGS));
             return true;
         }
 
@@ -43,7 +43,7 @@ public class SpawnMobCommand implements CommandExecutor
             entityType = EntityType.valueOf(args[0]);
         } catch (IllegalArgumentException ignored)
         {
-            MessageManager.sendMessage(player, Message.CMD_SPAWNMOB_INVALID_MOB);
+            player.sendMessage(ButterflyCore.getMessages().get(Messages.COMMAND_SPAWNMOB_INVALID_MOB));
             return true;
         }
 
@@ -55,8 +55,7 @@ public class SpawnMobCommand implements CommandExecutor
                 amount = Integer.parseInt(args[1]);
             } catch (NumberFormatException ignored)
             {
-                // TODO -- config message
-                player.sendMessage(Utils.color("&cMust be an integer!"));
+                player.sendMessage(ButterflyCore.getMessages().get(Messages.GENERAL_INVALID_ARGS));
                 return true;
             }
         }

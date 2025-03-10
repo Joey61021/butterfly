@@ -12,7 +12,8 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-public class WorldManager {
+public class WorldManager
+{
 
     public static void smash(Location location, int radius, int breakChance)
     {
@@ -54,21 +55,26 @@ public class WorldManager {
         }
     }
 
-    public static boolean isLargeMob(EntityType entityType) {
-        return switch (entityType) {
+    public static boolean isLargeMob(EntityType entityType)
+    {
+        return switch (entityType)
+        {
             case IRON_GOLEM, RAVAGER, WARDEN, WITHER, HOGLIN, ZOGLIN, ENDER_DRAGON -> true;
             default -> false;
         };
     }
 
-    public static boolean canBeBroken(Material material) {
-        return switch (material) {
+    public static boolean canBeBroken(Material material)
+    {
+        return switch (material)
+        {
             case BEDROCK, OBSIDIAN -> false;
             default -> true;
         };
     }
 
-    public static void getNearbyBlocks(int radius, Location location, Set<Block> blocks) {
+    public static void getNearbyBlocks(int radius, Location location, Set<Block> blocks)
+    {
         int bx = (int) location.getX();
         int by = (int) location.getY();
         int bz = (int) location.getZ();
@@ -80,13 +86,17 @@ public class WorldManager {
             return;
         }
 
-        for (int x = -radius; x <= radius; x++) {
-            for (int y = -radius; y <= radius; y++) {
-                for (int z = -radius; z <= radius; z++) {
+        for (int x = -radius; x <= radius; x++)
+        {
+            for (int y = -radius; y <= radius; y++)
+            {
+                for (int z = -radius; z <= radius; z++)
+                {
                     Block relative = world.getBlockAt(bx + x, by + y, bz + z);
 
                     // Check if within spherical radius
-                    if (relative.getLocation().distance(location) <= radius) {
+                    if (relative.getLocation().distance(location) <= radius)
+                    {
                         blocks.add(relative);
                     }
                 }
